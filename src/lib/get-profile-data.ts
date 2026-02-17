@@ -48,9 +48,11 @@ export async function getProfileData(): Promise<ProfileData> {
     const version = getStoryblokVersion();
     const { data } = await storyblokApi.get("cdn/stories/profile", {
       version,
+      cv: Date.now(),
     });
 
     const content = data.story.content;
+    console.log("[Storyblok] Profile loaded, name:", content.name);
 
     return {
       personal: {
@@ -107,8 +109,8 @@ export async function getProfileData(): Promise<ProfileData> {
           ? parseLines(content.skills)
           : cvFallback.skills,
     };
-  } catch {
-    // Storyblok not configured or "profile" story doesn't exist yet - use JSON fallback
+  } catch (error) {
+    console.error("[Storyblok] Profile fetch failed, using fallback:", error);
     return {
       ...cvFallback,
       personal: {
