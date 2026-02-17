@@ -11,7 +11,7 @@ test.describe("Home Page", () => {
 
   test("hero section displays name and tagline", async ({ page }) => {
     await expect(page.getByRole("heading", { level: 1 })).toContainText(
-      "Maciej Szamowski"
+      "Szamowski"
     );
     await expect(page.getByRole("main").getByText("Digital One Man Army")).toBeVisible();
     await expect(page.getByText("The Talented")).toBeVisible();

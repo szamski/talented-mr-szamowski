@@ -13,5 +13,7 @@ export function getReadingTime(text: string): number {
 }
 
 export function getStoryblokVersion(): "draft" | "published" {
-  return process.env.NODE_ENV === "production" ? "published" : "draft";
+  // Use "draft" always since we use the preview token — this ensures
+  // edits are visible immediately without waiting for CDN cache
+  return "draft";
 }
