@@ -18,7 +18,7 @@ export default function ExperienceTimeline({
   return (
     <section id="experience" className="max-w-6xl mx-auto px-4 sm:px-6 py-20">
       <h2 className="text-3xl sm:text-4xl font-bold mb-12">
-        <span className="text-gradient">Experience</span>
+        <span className="text-gradient">A History of Impact</span>
       </h2>
 
       <div className="relative">

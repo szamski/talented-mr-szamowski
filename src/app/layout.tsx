@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   description:
     "Marketing and business leader with 15+ years of experience. Digital One Man Army.",
   metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL || "https://szamowski.com"
+    process.env.NEXT_PUBLIC_SITE_URL || "https://szamowski.dev"
   ),
 };
 

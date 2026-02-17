@@ -39,7 +39,7 @@ export default function Footer({ name, tagline, description, social }: FooterPro
             <ul className="space-y-2">
               {[
                 { href: "/", label: "Home" },
-                { href: "/case-studies", label: "Case Studies" },
+                { href: "/case-studies", label: "Selected Works" },
                 { href: "/blog", label: "Blog" },
                 { href: "/contact", label: "Contact" },
               ].map((link) => (

@@ -21,7 +21,7 @@ export default function TechProjectsSection({
   return (
     <section className="max-w-6xl mx-auto px-4 sm:px-6 py-20">
       <h2 className="text-3xl sm:text-4xl font-bold mb-8">
-        Case <span className="text-gradient">Studies</span>
+        Selected <span className="text-gradient">Works</span>
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {projects.map((project) => {

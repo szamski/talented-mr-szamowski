@@ -18,7 +18,7 @@ export default function AboutSection({
   return (
     <section className="max-w-6xl mx-auto px-4 sm:px-6 py-20">
       <h2 className="text-3xl sm:text-4xl font-bold mb-8">
-        About <span className="text-gradient">Me</span>
+        The Art of <span className="text-gradient">Adaptability</span>
       </h2>
       <GlassCard className="p-6 sm:p-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
