@@ -39,24 +39,24 @@ export default function HeroSection({ name, headline, tagline, headshot }: HeroS
         </div>
 
         {/* Photo — transparent PNG, floats over background */}
-        <div className="relative hidden lg:flex justify-center animate-fade-in">
-          <div className="relative w-[340px] h-[440px] xl:w-[400px] xl:h-[520px]">
+        <div className="relative hidden lg:flex justify-center items-end animate-fade-in">
+          <div className="relative w-105 h-140 xl:w-120 xl:h-160">
             {/* Glow behind figure */}
-            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-brand/20 rounded-full blur-[80px]" />
-            {/* Green accent ring behind */}
-            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 w-72 h-72 xl:w-80 xl:h-80 rounded-full border border-brand/15" />
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 w-80 h-80 xl:w-[22rem] xl:h-[22rem] rounded-full border border-brand/8" />
-            {/* Photo */}
+            <div className="absolute bottom-12 left-1/2 -translate-x-1/2 w-80 h-80 bg-brand/15 rounded-full blur-[100px]" />
+            {/* Green accent rings behind */}
+            <div className="absolute bottom-16 left-1/2 -translate-x-1/2 w-72 h-72 xl:w-80 xl:h-80 rounded-full border border-brand/15" />
+            <div className="absolute bottom-10 left-1/2 -translate-x-1/2 w-88 h-88 xl:w-96 xl:h-96 rounded-full border border-brand/8" />
+            {/* Photo — unoptimized to preserve PNG transparency */}
             <div className="relative w-full h-full">
-              <Image
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
                 src={headshot.url}
                 alt={headshot.alt}
-                fill
-                className="object-contain object-bottom drop-shadow-[0_0_30px_rgba(13,223,114,0.15)]"
-                priority
+                className="absolute inset-0 w-full h-full object-contain object-bottom drop-shadow-[0_0_40px_rgba(13,223,114,0.12)]"
+                fetchPriority="high"
               />
               {/* Bottom fade into background */}
-              <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#050a08] to-transparent" />
+              <div className="absolute bottom-0 left-0 right-0 h-28 bg-gradient-to-t from-[#050a08] via-[#050a08]/60 to-transparent" />
             </div>
           </div>
         </div>
