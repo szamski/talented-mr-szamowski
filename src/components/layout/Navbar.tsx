@@ -6,6 +6,7 @@ import { useState } from "react";
 
 const navLinks = [
   { href: "/", label: "Home" },
+  { href: "/case-studies", label: "Case Studies" },
   { href: "/blog", label: "Blog" },
   { href: "/contact", label: "Contact" },
 ];
@@ -36,7 +37,7 @@ export default function Navbar() {
               <Link
                 href={link.href}
                 className={`text-sm font-medium transition-colors ${
-                  pathname === link.href
+                  pathname === link.href || (link.href !== "/" && pathname.startsWith(link.href))
                     ? "text-brand"
                     : "text-gray-400 hover:text-white"
                 }`}

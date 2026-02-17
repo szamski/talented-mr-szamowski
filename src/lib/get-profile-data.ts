@@ -33,6 +33,8 @@ export interface ProfileData {
     name: string;
     description: string;
     tech_stack: string[];
+    thumbnail?: StoryblokImage;
+    slug?: string;
   }[];
   skills: string[];
 }
@@ -140,6 +142,8 @@ export async function getProfileData(): Promise<ProfileData> {
               name: string;
               description: string;
               tech_stack: string;
+              thumbnail?: { filename?: string; alt?: string };
+              slug?: string;
             }) => ({
               name: proj.name,
               description: proj.description,
@@ -147,6 +151,10 @@ export async function getProfileData(): Promise<ProfileData> {
                 typeof proj.tech_stack === "string"
                   ? parseComma(proj.tech_stack)
                   : proj.tech_stack || [],
+              thumbnail: proj.thumbnail?.filename
+                ? { url: proj.thumbnail.filename, alt: proj.thumbnail.alt || proj.name }
+                : undefined,
+              slug: proj.slug || undefined,
             })
           )
         : cvFallback.tech_projects,
