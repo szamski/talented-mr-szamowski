@@ -21,28 +21,26 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
   const page = Number(params.page) || 1;
   const perPage = 5;
   const tag = params.tag;
-  const profileData = await getProfileData();
 
-  let stories: StoryblokArticle[] = [];
-  let total = 0;
-
-  try {
-    const fetchParams: Record<string, string | number> = {
-      starts_with: "articles/",
-      content_type: "article",
-      per_page: perPage,
-      page,
-      sort_by: "content.published_at:desc",
-    };
-    if (tag) {
-      fetchParams["filter_query[tags][any_in_array]"] = tag;
-    }
-    const data = await storyblokFetch("cdn/stories", fetchParams);
-    stories = data.stories;
-    total = data.total || 0;
-  } catch {
-    // Storyblok not configured yet - show empty state
+  const fetchParams: Record<string, string | number> = {
+    starts_with: "articles/",
+    content_type: "article",
+    per_page: perPage,
+    page,
+    sort_by: "content.published_at:desc",
+  };
+  if (tag) {
+    fetchParams["filter_query[tags][any_in_array]"] = tag;
   }
+
+  // Run both fetches in parallel — they are independent of each other
+  const [profileData, storiesResult] = await Promise.all([
+    getProfileData(),
+    storyblokFetch("cdn/stories", fetchParams).catch(() => ({ stories: [], total: 0 })),
+  ]);
+
+  const stories: StoryblokArticle[] = storiesResult.stories ?? [];
+  const total: number = storiesResult.total ?? 0;
 
   const totalPages = Math.ceil(total / perPage);
 

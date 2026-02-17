@@ -26,19 +26,17 @@ interface CaseStudyStory {
 }
 
 export default async function CaseStudiesPage() {
-  const profileData = await getProfileData();
-  let stories: CaseStudyStory[] = [];
-
-  try {
-    const data = await storyblokFetch("cdn/stories", {
+  // Run both fetches in parallel — they are independent of each other
+  const [profileData, storiesResult] = await Promise.all([
+    getProfileData(),
+    storyblokFetch("cdn/stories", {
       starts_with: "case-studies/",
       content_type: "case_study",
       per_page: 20,
-    });
-    stories = data.stories;
-  } catch {
-    // Storyblok not configured yet
-  }
+    }).catch(() => ({ stories: [] })),
+  ]);
+
+  const stories: CaseStudyStory[] = storiesResult.stories ?? [];
 
   return (
     <section className="max-w-4xl mx-auto px-4 sm:px-6 py-20">

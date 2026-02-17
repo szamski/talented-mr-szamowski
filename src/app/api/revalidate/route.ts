@@ -1,4 +1,4 @@
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
@@ -7,6 +7,9 @@ export async function POST(request: NextRequest) {
   if (secret !== process.env.REVALIDATION_SECRET) {
     return NextResponse.json({ error: "Invalid secret" }, { status: 401 });
   }
+
+  // Invalidate the shared Storyblok fetch cache (unstable_cache tag)
+  revalidateTag("storyblok");
 
   revalidatePath("/", "layout");
   revalidatePath("/blog", "layout");
