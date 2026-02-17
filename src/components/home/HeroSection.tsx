@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Button from "@/components/ui/Button";
 
 interface HeroSectionProps {
@@ -15,9 +14,9 @@ export default function HeroSection({ name, headline, tagline, headshot }: HeroS
       <div className="absolute top-1/4 -left-32 w-96 h-96 bg-brand/10 rounded-full blur-[128px]" />
       <div className="absolute bottom-1/4 -right-32 w-96 h-96 bg-dark-green/30 rounded-full blur-[128px]" />
 
-      <div className="relative z-10 max-w-6xl w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-        {/* Text */}
-        <div className="text-center lg:text-left">
+      <div className="relative z-10 max-w-6xl w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-end">
+        {/* Text — aligned to bottom of photo */}
+        <div className="text-center lg:text-left pb-8">
           <p className="text-sm uppercase tracking-[0.3em] text-brand/70 mb-6 animate-fade-in">
             The Talented
           </p>
@@ -38,26 +37,26 @@ export default function HeroSection({ name, headline, tagline, headshot }: HeroS
           </div>
         </div>
 
-        {/* Photo — transparent PNG, floats over background */}
-        <div className="relative hidden lg:flex justify-center items-end animate-fade-in">
-          <div className="relative w-105 h-140 xl:w-120 xl:h-160">
+        {/* Photo — transparent PNG, 20% bigger, CSS mask fade to transparent */}
+        <div className="relative hidden lg:flex justify-center animate-fade-in">
+          <div className="relative w-125 h-165 xl:w-145 xl:h-190">
             {/* Glow behind figure */}
-            <div className="absolute bottom-12 left-1/2 -translate-x-1/2 w-80 h-80 bg-brand/15 rounded-full blur-[100px]" />
+            <div className="absolute bottom-20 left-1/2 -translate-x-1/2 w-96 h-96 bg-brand/12 rounded-full blur-[120px]" />
             {/* Green accent rings behind */}
-            <div className="absolute bottom-16 left-1/2 -translate-x-1/2 w-72 h-72 xl:w-80 xl:h-80 rounded-full border border-brand/15" />
-            <div className="absolute bottom-10 left-1/2 -translate-x-1/2 w-88 h-88 xl:w-96 xl:h-96 rounded-full border border-brand/8" />
-            {/* Photo — unoptimized to preserve PNG transparency */}
-            <div className="relative w-full h-full">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={headshot.url}
-                alt={headshot.alt}
-                className="absolute inset-0 w-full h-full object-contain object-bottom drop-shadow-[0_0_40px_rgba(13,223,114,0.12)]"
-                fetchPriority="high"
-              />
-              {/* Bottom fade into background */}
-              <div className="absolute bottom-0 left-0 right-0 h-28 bg-gradient-to-t from-[#050a08] via-[#050a08]/60 to-transparent" />
-            </div>
+            <div className="absolute bottom-28 left-1/2 -translate-x-1/2 w-80 h-80 xl:w-88 xl:h-88 rounded-full border border-brand/15" />
+            <div className="absolute bottom-20 left-1/2 -translate-x-1/2 w-96 h-96 xl:w-104 xl:h-104 rounded-full border border-brand/8" />
+            {/* Photo — native img to preserve PNG transparency */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={headshot.url}
+              alt={headshot.alt}
+              className="absolute inset-0 w-full h-full object-contain object-bottom drop-shadow-[0_0_40px_rgba(13,223,114,0.12)]"
+              style={{
+                maskImage: "linear-gradient(to bottom, black 60%, transparent 100%)",
+                WebkitMaskImage: "linear-gradient(to bottom, black 60%, transparent 100%)",
+              }}
+              fetchPriority="high"
+            />
           </div>
         </div>
       </div>
