@@ -4,6 +4,8 @@ import { getStoryblokApi } from "@/lib/storyblok";
 import { getStoryblokVersion } from "@/lib/utils";
 import GlassCard from "@/components/ui/GlassCard";
 
+export const revalidate = 60;
+
 export const metadata: Metadata = {
   title: "Blog Archive",
 };

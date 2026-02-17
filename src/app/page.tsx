@@ -5,6 +5,8 @@ import SkillsGrid from "@/components/home/SkillsGrid";
 import TechProjectsSection from "@/components/home/TechProjectsSection";
 import { getProfileData } from "@/lib/get-profile-data";
 
+export const revalidate = 60;
+
 export default async function HomePage() {
   const data = await getProfileData();
 
