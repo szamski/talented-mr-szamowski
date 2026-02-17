@@ -59,13 +59,17 @@ async function mapiQuery(
     }
 
     // First get story IDs
-    const listData = await mapiFetch(`${base}/stories?${searchParams}`, token);
+    const listUrl = `${base}/stories?${searchParams}`;
+    console.log("[MAPI] list URL:", listUrl);
+    const listData = await mapiFetch(listUrl, token);
     const stories = listData.stories || [];
+    console.log("[MAPI] list returned", stories.length, "stories, IDs:", stories.map((s: { id: number }) => s.id));
 
     // Fetch full content for each story
     const fullStories = await Promise.all(
       stories.map(async (s: { id: number }) => {
         const detail = await mapiFetch(`${base}/stories/${s.id}`, token);
+        console.log("[MAPI] detail for", s.id, "content keys:", Object.keys(detail.story?.content || {}));
         return detail.story;
       })
     );

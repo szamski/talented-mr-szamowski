@@ -62,9 +62,9 @@ export async function getProfileData(): Promise<ProfileData> {
     });
     if (!data.stories?.length) throw new Error("No profile story found");
     const content = data.stories[0].content;
+    console.log("[Storyblok] content keys:", Object.keys(content));
     console.log("[Storyblok] Profile loaded, name:", content.name);
-    console.log("[Storyblok] headshot:", JSON.stringify(content.headshot));
-    console.log("[Storyblok] gallery_1:", JSON.stringify(content.gallery_1));
+    console.log("[Storyblok] headshot:", JSON.stringify(content.headshot)?.slice(0, 200));
 
     const assetUrl = (field: { filename?: string; alt?: string } | undefined, fallback: string) =>
       field?.filename || fallback;
