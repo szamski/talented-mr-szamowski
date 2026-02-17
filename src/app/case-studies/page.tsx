@@ -43,7 +43,7 @@ export default async function CaseStudiesPage() {
   return (
     <section className="max-w-4xl mx-auto px-4 sm:px-6 py-20">
       <h1 className="text-4xl sm:text-5xl font-bold mb-4">
-        Case <span className="text-gradient">Studies</span>
+        Selected <span className="text-gradient">Works</span>
       </h1>
       <p className="text-gray-400 mb-10">
         {profileData.pages.case_studies_description}
@@ -85,7 +85,7 @@ export default async function CaseStudiesPage() {
                         .map((t) => t.trim())
                         .filter(Boolean)
                         .map((tech) => (
-                          <Tag key={tech}>{tech}</Tag>
+                          <Tag key={tech} icon>{tech}</Tag>
                         ))}
                     </div>
                   )}

@@ -8,7 +8,7 @@ interface TagProps {
   icon?: boolean;
 }
 
-export default function Tag({ children, href, className = "", icon = true }: TagProps) {
+export default function Tag({ children, href, className = "", icon = false }: TagProps) {
   const classes = `inline-flex items-center gap-1.5 bg-dark-green text-brand-secondary rounded-full px-3 py-1 text-xs font-medium transition-colors ${className}`;
   const label = typeof children === "string" ? children : "";
   const Icon = icon && label ? getTechIcon(label) : null;

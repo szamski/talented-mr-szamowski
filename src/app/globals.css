@@ -10,7 +10,7 @@
   --color-border-glass: rgba(13, 223, 114, 0.1);
   --color-border-brand: rgba(13, 223, 114, 0.25);
 
-  --font-sans: "Inter", system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), "JetBrains Mono", monospace;
 }
 
 @layer base {

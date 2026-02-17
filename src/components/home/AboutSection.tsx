@@ -1,9 +1,11 @@
 import Image from "next/image";
+import { render } from "storyblok-rich-text-react-renderer";
 import GlassCard from "@/components/ui/GlassCard";
 import Tag from "@/components/ui/Tag";
 
 interface AboutSectionProps {
-  profile: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  profile: any;
   targetRoles: string[];
   portrait: { url: string; alt: string };
   gallery: { image: { url: string; alt: string }; caption: string; position: string }[];
@@ -21,10 +23,10 @@ export default function AboutSection({
         The Art of <span className="text-gradient">Adaptability</span>
       </h2>
       <GlassCard className="p-6 sm:p-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
           {/* Photo */}
-          <div className="relative mx-auto md:mx-0">
-            <div className="relative w-48 h-48 md:w-full md:h-64 rounded-2xl overflow-hidden border border-white/10">
+          <div className="relative">
+            <div className="relative w-full h-64 md:h-full md:min-h-64 rounded-2xl overflow-hidden border border-white/10">
               <Image
                 src={portrait.url}
                 alt={portrait.alt}
@@ -37,9 +39,9 @@ export default function AboutSection({
 
           {/* Text */}
           <div className="md:col-span-2">
-            <p className="text-gray-300 text-lg leading-relaxed mb-6">
-              {profile}
-            </p>
+            <div className="prose prose-invert prose-lg max-w-none mb-6 [&_p]:text-gray-300 [&_p]:leading-relaxed">
+              {render(profile)}
+            </div>
             <div className="flex flex-wrap gap-2">
               {targetRoles.map((role) => (
                 <Tag key={role}>{role}</Tag>

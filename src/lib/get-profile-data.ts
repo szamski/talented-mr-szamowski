@@ -15,7 +15,9 @@ export interface ProfileData {
     email: string;
     location: string;
   };
-  profile: string;
+  // Storyblok richtext document or plain string fallback
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  profile: any;
   target_roles: string[];
   images: {
     headshot: StoryblokImage;
@@ -37,6 +39,7 @@ export interface ProfileData {
     slug?: string;
   }[];
   skills: string[];
+  clients: { name: string; logo: StoryblokImage; url?: string }[];
   social: {
     linkedin: string;
     github: string;
@@ -90,7 +93,7 @@ export async function getProfileData(): Promise<ProfileData> {
         email: content.email || cvFallback.personal.email,
         location: content.location || cvFallback.personal.location,
       },
-      profile: content.profile_text || cvFallback.profile,
+      profile: content.profile_text || { type: "doc", content: [{ type: "paragraph", content: [{ type: "text", text: cvFallback.profile }] }] },
       images: {
         headshot: {
           url: assetUrl(content.headshot, "/images/szama bez tła.png"),
@@ -177,6 +180,16 @@ export async function getProfileData(): Promise<ProfileData> {
         typeof content.skills === "string" && content.skills
           ? parseLines(content.skills)
           : cvFallback.skills,
+      clients: (content.clients || []).map(
+        (c: { name: string; logo?: { filename?: string; alt?: string }; url?: string }) => ({
+          name: c.name || "",
+          logo: {
+            url: c.logo?.filename || "",
+            alt: c.logo?.alt || c.name || "",
+          },
+          url: c.url || undefined,
+        })
+      ).filter((c: { logo: { url: string } }) => c.logo.url),
       social: {
         linkedin: content.linkedin_url || "https://linkedin.com/in/maciekszamowski",
         github: content.github_url || "https://github.com/maciekszamowski",
@@ -198,6 +211,8 @@ export async function getProfileData(): Promise<ProfileData> {
         ...cvFallback.personal,
         tagline: "DIGITAL ONE MAN ARMY",
       },
+      profile: { type: "doc", content: [{ type: "paragraph", content: [{ type: "text", text: cvFallback.profile }] }] },
+      clients: [],
       images: {
         headshot: { url: "/images/szama bez tła.png", alt: "Maciej Szamowski" },
         portrait: { url: "/images/DSC04666.jpg", alt: "Maciej Szamowski - B&W portrait" },

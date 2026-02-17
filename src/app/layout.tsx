@@ -1,15 +1,16 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import StoryblokProvider from "@/components/storyblok/StoryblokProvider";
 import BackgroundEffects from "@/components/layout/BackgroundEffects";
+import CursorWarp from "@/components/effects/CursorWarp";
 import { getProfileData } from "@/lib/get-profile-data";
 
-const inter = Inter({
+const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-jetbrains-mono",
 });
 
 export const metadata: Metadata = {
@@ -33,10 +34,11 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body className={`${inter.variable} font-sans antialiased`}>
+      <body className={`${jetbrainsMono.variable} font-mono antialiased`}>
         <BackgroundEffects />
+        <CursorWarp />
         <StoryblokProvider>
-          <Navbar name={data.personal.name} tagline={data.personal.tagline} />
+          <Navbar />
           <main className="min-h-screen pt-16">{children}</main>
           <Footer
             name={data.personal.name}

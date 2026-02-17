@@ -11,12 +11,7 @@ const navLinks = [
   { href: "/contact", label: "Contact" },
 ];
 
-interface NavbarProps {
-  name: string;
-  tagline: string;
-}
-
-export default function Navbar({ name, tagline }: NavbarProps) {
+export default function Navbar() {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -25,14 +20,14 @@ export default function Navbar({ name, tagline }: NavbarProps) {
       <nav className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
         <Link
           href="/"
-          className="flex flex-col hover:opacity-80 transition-opacity"
+          className="hover:opacity-80 transition-opacity"
         >
-          <span className="text-base font-bold text-brand leading-tight">
-            {name}
-          </span>
-          <span className="text-[10px] text-gray-500 uppercase tracking-widest leading-tight">
-            {tagline}
-          </span>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/images/logo_header.svg"
+            alt="szamowski.dev"
+            className="h-8 w-auto"
+          />
         </Link>
 
         {/* Desktop nav */}

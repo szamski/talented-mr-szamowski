@@ -47,7 +47,7 @@ export default function TechProjectsSection({
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {project.tech_stack.map((tech) => (
-                    <Tag key={tech}>{tech}</Tag>
+                    <Tag key={tech} icon>{tech}</Tag>
                   ))}
                 </div>
               </div>

@@ -48,7 +48,7 @@ export default function CaseStudyContent({ story }: CaseStudyContentProps) {
             .map((t) => t.trim())
             .filter(Boolean)
             .map((tech) => (
-              <Tag key={tech}>{tech}</Tag>
+              <Tag key={tech} icon>{tech}</Tag>
             ))}
         </div>
       )}

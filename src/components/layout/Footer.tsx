@@ -15,9 +15,9 @@ export default function Footer({ name, tagline, description, social }: FooterPro
   return (
     <footer className="border-t border-white/10 mt-20">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-8">
           {/* Brand */}
-          <div>
+          <div className="col-span-2 md:col-span-1">
             <h3 className="text-lg font-bold text-brand mb-2">
               {name}
             </h3>
