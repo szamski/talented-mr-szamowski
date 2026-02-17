@@ -1,5 +1,4 @@
-import { getStoryblokApi } from "@/lib/storyblok";
-import { getStoryblokVersion } from "@/lib/utils";
+import { storyblokFetch } from "@/lib/storyblok";
 import type { StoryblokArticle } from "@/lib/types";
 import BlogCard from "./BlogCard";
 
@@ -14,19 +13,13 @@ export default async function RelatedPosts({
 }: RelatedPostsProps) {
   if (!tags.length) return null;
 
-  const storyblokApi = getStoryblokApi();
-  const version = getStoryblokVersion();
-
   try {
-    const { data } = await storyblokApi.get("cdn/stories", {
-      version,
+    const data = await storyblokFetch("cdn/stories", {
       starts_with: "articles/",
       content_type: "article",
       per_page: 3,
       excluding_slugs: `articles/${currentSlug}`,
-      filter_query: {
-        tags: { any_in_array: tags.join(",") },
-      },
+      "filter_query[tags][any_in_array]": tags.join(","),
     });
 
     if (!data.stories.length) return null;
@@ -35,11 +28,9 @@ export default async function RelatedPosts({
       <section className="mt-16 pt-8 border-t border-white/10">
         <h2 className="text-2xl font-bold mb-6">Related Posts</h2>
         <div className="grid gap-6">
-          {data.stories.map(
-            (story: StoryblokArticle) => (
-              <BlogCard key={story.uuid} story={story} />
-            )
-          )}
+          {data.stories.map((story: StoryblokArticle) => (
+            <BlogCard key={story.uuid} story={story} />
+          ))}
         </div>
       </section>
     );

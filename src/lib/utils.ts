@@ -11,9 +11,3 @@ export function getReadingTime(text: string): number {
   const words = text.trim().split(/\s+/).length;
   return Math.ceil(words / wordsPerMinute);
 }
-
-export function getStoryblokVersion(): "draft" | "published" {
-  // Use "draft" always since we use the preview token — this ensures
-  // edits are visible immediately without waiting for CDN cache
-  return "draft";
-}

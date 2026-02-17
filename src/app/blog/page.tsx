@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import { getStoryblokApi } from "@/lib/storyblok";
-import { getStoryblokVersion } from "@/lib/utils";
+import { storyblokFetch } from "@/lib/storyblok";
 import BlogCard from "@/components/blog/BlogCard";
 import Pagination from "@/components/ui/Pagination";
 import Tag from "@/components/ui/Tag";
@@ -21,31 +20,24 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
   const page = Number(params.page) || 1;
   const perPage = 5;
   const tag = params.tag;
-  const version = getStoryblokVersion();
-
-  const storyblokApi = getStoryblokApi();
 
   let stories: StoryblokArticle[] = [];
   let total = 0;
 
   try {
-    const response = await storyblokApi.get("cdn/stories", {
-      version,
+    const fetchParams: Record<string, string | number> = {
       starts_with: "articles/",
       content_type: "article",
       per_page: perPage,
       page,
       sort_by: "content.published_at:desc",
-      ...(tag && {
-        filter_query: {
-          tags: { any_in_array: tag },
-        },
-      }),
-    });
-    stories = response.data.stories;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const headers = response.headers as any;
-    total = headers?.total ? Number(headers.total) : 0;
+    };
+    if (tag) {
+      fetchParams["filter_query[tags][any_in_array]"] = tag;
+    }
+    const data = await storyblokFetch("cdn/stories", fetchParams);
+    stories = data.stories;
+    total = data.total || 0;
   } catch {
     // Storyblok not configured yet - show empty state
   }

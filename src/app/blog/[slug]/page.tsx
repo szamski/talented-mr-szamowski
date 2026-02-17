@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getStoryblokApi } from "@/lib/storyblok";
-import { getStoryblokVersion } from "@/lib/utils";
+import { storyblokFetch } from "@/lib/storyblok";
 import BlogPostContent from "@/components/blog/BlogPostContent";
 import RelatedPosts from "@/components/blog/RelatedPosts";
 import ShareLinks from "@/components/ui/ShareLinks";
@@ -12,13 +11,9 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const storyblokApi = getStoryblokApi();
-  const version = getStoryblokVersion();
 
   try {
-    const { data } = await storyblokApi.get(`cdn/stories/articles/${slug}`, {
-      version,
-    });
+    const data = await storyblokFetch(`cdn/stories/articles/${slug}`);
     return {
       title: data.story.content.title,
       description: data.story.content.excerpt,
@@ -30,14 +25,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function BlogPostPage({ params }: Props) {
   const { slug } = await params;
-  const storyblokApi = getStoryblokApi();
-  const version = getStoryblokVersion();
 
   let story;
   try {
-    const { data } = await storyblokApi.get(`cdn/stories/articles/${slug}`, {
-      version,
-    });
+    const data = await storyblokFetch(`cdn/stories/articles/${slug}`);
     story = data.story;
   } catch {
     notFound();

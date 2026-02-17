@@ -1,5 +1,4 @@
-import { getStoryblokApi } from "./storyblok";
-import { getStoryblokVersion } from "./utils";
+import { storyblokFetch } from "./storyblok";
 import cvFallback from "../../maciek_szamowski_cv.json";
 
 export interface ProfileData {
@@ -44,13 +43,7 @@ function parseComma(text: string): string[] {
 
 export async function getProfileData(): Promise<ProfileData> {
   try {
-    const storyblokApi = getStoryblokApi();
-    const version = getStoryblokVersion();
-    const { data } = await storyblokApi.get("cdn/stories/profile", {
-      version,
-      cv: Date.now(),
-    });
-
+    const data = await storyblokFetch("cdn/stories/profile");
     const content = data.story.content;
     console.log("[Storyblok] Profile loaded, name:", content.name);
 

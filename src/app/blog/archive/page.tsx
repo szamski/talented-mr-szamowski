@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { getStoryblokApi } from "@/lib/storyblok";
-import { getStoryblokVersion } from "@/lib/utils";
+import { storyblokFetch } from "@/lib/storyblok";
 import GlassCard from "@/components/ui/GlassCard";
 
 export const revalidate = 60;
@@ -19,14 +18,10 @@ interface Story {
 }
 
 export default async function ArchivePage() {
-  const storyblokApi = getStoryblokApi();
-  const version = getStoryblokVersion();
-
   let stories: Story[] = [];
 
   try {
-    const { data } = await storyblokApi.get("cdn/stories", {
-      version,
+    const data = await storyblokFetch("cdn/stories", {
       starts_with: "articles/",
       content_type: "article",
       per_page: 100,
