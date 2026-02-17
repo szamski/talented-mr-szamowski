@@ -15,7 +15,7 @@ export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 glass border-0 border-b border-white/10">
+    <header className="fixed top-0 left-0 right-0 z-50 glass border-0 border-b border-brand/10">
       <nav className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
         <Link
           href="/"
@@ -80,7 +80,7 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden glass border-0 border-t border-white/10">
+        <div className="md:hidden glass border-0 border-t border-brand/10">
           <ul className="px-4 py-4 space-y-3">
             {navLinks.map((link) => (
               <li key={link.href}>

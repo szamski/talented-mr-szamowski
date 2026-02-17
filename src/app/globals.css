@@ -5,10 +5,10 @@
   --color-brand: #0ddf72;
   --color-brand-secondary: #dafce0;
   --color-dark-green: #1d392b;
-  --color-surface: rgba(255, 255, 255, 0.05);
-  --color-surface-hover: rgba(255, 255, 255, 0.1);
-  --color-border-glass: rgba(255, 255, 255, 0.1);
-  --color-border-brand: rgba(13, 223, 114, 0.2);
+  --color-surface: rgba(13, 223, 114, 0.06);
+  --color-surface-hover: rgba(13, 223, 114, 0.12);
+  --color-border-glass: rgba(13, 223, 114, 0.1);
+  --color-border-brand: rgba(13, 223, 114, 0.25);
 
   --font-sans: "Inter", system-ui, sans-serif;
 }
@@ -19,71 +19,68 @@
   }
 
   body {
-    background: #030806;
+    background: #0a1f15;
     color: #ffffff;
     min-height: 100vh;
     position: relative;
     overflow-x: hidden;
   }
 
-  /* Layered background effects */
+  /* Subtle grid pattern */
   body::before {
     content: "";
     position: fixed;
     inset: 0;
     z-index: -2;
     background:
-      /* Subtle grid pattern */
-      linear-gradient(rgba(13, 223, 114, 0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(13, 223, 114, 0.03) 1px, transparent 1px);
+      linear-gradient(rgba(13, 223, 114, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(13, 223, 114, 0.04) 1px, transparent 1px);
     background-size: 60px 60px;
   }
 
+  /* Gradient overlays */
   body::after {
     content: "";
     position: fixed;
     inset: 0;
     z-index: -1;
     background:
-      /* Top-center glow — hero area */
-      radial-gradient(ellipse 50% 40% at 50% 0%, rgba(13, 223, 114, 0.12), transparent),
-      /* Left accent */
-      radial-gradient(circle 600px at 0% 40%, rgba(29, 57, 43, 0.4), transparent),
-      /* Right accent — lower */
-      radial-gradient(circle 500px at 100% 70%, rgba(13, 223, 114, 0.06), transparent),
-      /* Center warmth */
-      radial-gradient(ellipse 80% 60% at 50% 50%, rgba(13, 223, 114, 0.03), transparent);
-    animation: bgShift 20s ease-in-out infinite alternate;
+      /* Hero glow — top center */
+      radial-gradient(ellipse 60% 45% at 50% -5%, rgba(13, 223, 114, 0.18), transparent),
+      /* Left warm glow */
+      radial-gradient(circle 700px at -5% 35%, rgba(29, 57, 43, 0.6), transparent),
+      /* Right accent */
+      radial-gradient(circle 500px at 105% 65%, rgba(13, 223, 114, 0.1), transparent),
+      /* Bottom subtle warmth */
+      radial-gradient(ellipse 70% 30% at 50% 100%, rgba(29, 57, 43, 0.3), transparent);
+    animation: bgPulse 25s ease-in-out infinite alternate;
   }
 
   ::selection {
-    background: rgba(13, 223, 114, 0.3);
+    background: rgba(13, 223, 114, 0.35);
     color: #ffffff;
   }
 }
 
-@keyframes bgShift {
+@keyframes bgPulse {
   0% {
     opacity: 1;
   }
-  50% {
-    opacity: 0.7;
-  }
   100% {
-    opacity: 1;
+    opacity: 0.8;
   }
 }
 
 @layer components {
   .glass {
-    background: rgba(255, 255, 255, 0.04);
+    background: rgba(13, 223, 114, 0.05);
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(13, 223, 114, 0.1);
     border-radius: 1rem;
     box-shadow:
-      0 4px 30px rgba(0, 0, 0, 0.4),
-      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      0 4px 30px rgba(0, 0, 0, 0.25),
+      inset 0 1px 0 rgba(255, 255, 255, 0.04);
   }
 
   .glass-hover {
@@ -91,24 +88,24 @@
   }
 
   .glass-hover:hover {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(13, 223, 114, 0.25);
+    background: rgba(13, 223, 114, 0.1);
+    border-color: rgba(13, 223, 114, 0.3);
     box-shadow:
-      0 0 30px rgba(13, 223, 114, 0.08),
-      0 8px 40px rgba(0, 0, 0, 0.3),
-      inset 0 1px 0 rgba(255, 255, 255, 0.08);
-    transform: translateY(-1px);
+      0 0 30px rgba(13, 223, 114, 0.1),
+      0 8px 40px rgba(0, 0, 0, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    transform: translateY(-2px);
   }
 
   .text-gradient {
-    background: linear-gradient(135deg, #0ddf72 0%, #a8f0c8 50%, #dafce0 100%);
+    background: linear-gradient(135deg, #0ddf72 0%, #5ef5a0 50%, #dafce0 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
   .glow-brand {
-    box-shadow: 0 0 30px rgba(13, 223, 114, 0.15);
+    box-shadow: 0 0 40px rgba(13, 223, 114, 0.2);
   }
 }
 
