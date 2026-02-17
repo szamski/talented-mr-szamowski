@@ -19,14 +19,41 @@
   }
 
   body {
-    background: #050a08;
-    background-image:
-      radial-gradient(ellipse 80% 50% at 50% -20%, rgba(13, 223, 114, 0.08), transparent),
-      radial-gradient(ellipse 60% 40% at 0% 50%, rgba(29, 57, 43, 0.25), transparent),
-      radial-gradient(ellipse 60% 40% at 100% 80%, rgba(13, 223, 114, 0.04), transparent);
-    background-attachment: fixed;
+    background: #030806;
     color: #ffffff;
     min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* Layered background effects */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    background:
+      /* Subtle grid pattern */
+      linear-gradient(rgba(13, 223, 114, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(13, 223, 114, 0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background:
+      /* Top-center glow — hero area */
+      radial-gradient(ellipse 50% 40% at 50% 0%, rgba(13, 223, 114, 0.12), transparent),
+      /* Left accent */
+      radial-gradient(circle 600px at 0% 40%, rgba(29, 57, 43, 0.4), transparent),
+      /* Right accent — lower */
+      radial-gradient(circle 500px at 100% 70%, rgba(13, 223, 114, 0.06), transparent),
+      /* Center warmth */
+      radial-gradient(ellipse 80% 60% at 50% 50%, rgba(13, 223, 114, 0.03), transparent);
+    animation: bgShift 20s ease-in-out infinite alternate;
   }
 
   ::selection {
@@ -35,14 +62,28 @@
   }
 }
 
+@keyframes bgShift {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 @layer components {
   .glass {
-    background: rgba(255, 255, 255, 0.06);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 1rem;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+    box-shadow:
+      0 4px 30px rgba(0, 0, 0, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
   }
 
   .glass-hover {
@@ -50,13 +91,17 @@
   }
 
   .glass-hover:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(13, 223, 114, 0.3);
-    box-shadow: 0 0 20px rgba(13, 223, 114, 0.1);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(13, 223, 114, 0.25);
+    box-shadow:
+      0 0 30px rgba(13, 223, 114, 0.08),
+      0 8px 40px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    transform: translateY(-1px);
   }
 
   .text-gradient {
-    background: linear-gradient(135deg, #0ddf72, #dafce0);
+    background: linear-gradient(135deg, #0ddf72 0%, #a8f0c8 50%, #dafce0 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -69,27 +114,29 @@
 
 @layer utilities {
   .animate-fade-in {
-    animation: fadeIn 0.6s ease-out forwards;
+    animation: fadeIn 0.8s ease-out forwards;
   }
 
   .animate-slide-up {
-    animation: slideUp 0.6s ease-out forwards;
+    animation: slideUp 0.8s ease-out forwards;
   }
 }
 
 @keyframes fadeIn {
   from {
     opacity: 0;
+    transform: scale(0.98);
   }
   to {
     opacity: 1;
+    transform: scale(1);
   }
 }
 
 @keyframes slideUp {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(24px);
   }
   to {
     opacity: 1;

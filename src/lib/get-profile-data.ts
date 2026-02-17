@@ -1,6 +1,11 @@
 import { storyblokFetch } from "./storyblok-fetch";
 import cvFallback from "../../maciek_szamowski_cv.json";
 
+export interface StoryblokImage {
+  url: string;
+  alt: string;
+}
+
 export interface ProfileData {
   personal: {
     name: string;
@@ -12,6 +17,11 @@ export interface ProfileData {
   };
   profile: string;
   target_roles: string[];
+  images: {
+    headshot: StoryblokImage;
+    portrait: StoryblokImage;
+    gallery: { image: StoryblokImage; caption: string }[];
+  };
   experience: {
     title: string;
     company: string;
@@ -52,6 +62,11 @@ export async function getProfileData(): Promise<ProfileData> {
     const content = data.stories[0].content;
     console.log("[Storyblok] Profile loaded, name:", content.name);
 
+    const assetUrl = (field: { filename?: string; alt?: string } | undefined, fallback: string) =>
+      field?.filename || fallback;
+    const assetAlt = (field: { filename?: string; alt?: string } | undefined, fallback: string) =>
+      field?.alt || fallback;
+
     return {
       personal: {
         name: content.name || cvFallback.personal.name,
@@ -62,6 +77,39 @@ export async function getProfileData(): Promise<ProfileData> {
         location: content.location || cvFallback.personal.location,
       },
       profile: content.profile_text || cvFallback.profile,
+      images: {
+        headshot: {
+          url: assetUrl(content.headshot, "/images/szama.jpg"),
+          alt: assetAlt(content.headshot, "Maciej Szamowski"),
+        },
+        portrait: {
+          url: assetUrl(content.portrait, "/images/DSC04666.jpg"),
+          alt: assetAlt(content.portrait, "Maciej Szamowski - B&W portrait"),
+        },
+        gallery: [
+          {
+            image: {
+              url: assetUrl(content.gallery_1, "/images/96fb7a55-4414-411d-bca4-a08fc583555c.jpg"),
+              alt: assetAlt(content.gallery_1, "Speaking at TikTok event"),
+            },
+            caption: content.gallery_1_caption || "TikTok CEE",
+          },
+          {
+            image: {
+              url: assetUrl(content.gallery_2, "/images/2024-11-18.jpg"),
+              alt: assetAlt(content.gallery_2, "At ISART Digital gaming wall"),
+            },
+            caption: content.gallery_2_caption || "ISART Digital",
+          },
+          {
+            image: {
+              url: assetUrl(content.gallery_3, "/images/IMG_0747.jpeg"),
+              alt: assetAlt(content.gallery_3, "Maciej at event"),
+            },
+            caption: content.gallery_3_caption || "Conference",
+          },
+        ],
+      },
       target_roles:
         typeof content.target_roles === "string" && content.target_roles
           ? parseLines(content.target_roles)
@@ -114,6 +162,15 @@ export async function getProfileData(): Promise<ProfileData> {
       personal: {
         ...cvFallback.personal,
         tagline: "DIGITAL ONE MAN ARMY",
+      },
+      images: {
+        headshot: { url: "/images/szama.jpg", alt: "Maciej Szamowski" },
+        portrait: { url: "/images/DSC04666.jpg", alt: "Maciej Szamowski - B&W portrait" },
+        gallery: [
+          { image: { url: "/images/96fb7a55-4414-411d-bca4-a08fc583555c.jpg", alt: "Speaking at TikTok event" }, caption: "TikTok CEE" },
+          { image: { url: "/images/2024-11-18.jpg", alt: "At ISART Digital gaming wall" }, caption: "ISART Digital" },
+          { image: { url: "/images/IMG_0747.jpeg", alt: "Maciej at event" }, caption: "Conference" },
+        ],
       },
     };
   }

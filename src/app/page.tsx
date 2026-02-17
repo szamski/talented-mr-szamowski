@@ -16,8 +16,14 @@ export default async function HomePage() {
         name={data.personal.name}
         headline={data.personal.headline}
         tagline={data.personal.tagline}
+        headshot={data.images.headshot}
       />
-      <AboutSection profile={data.profile} targetRoles={data.target_roles} />
+      <AboutSection
+        profile={data.profile}
+        targetRoles={data.target_roles}
+        portrait={data.images.portrait}
+        gallery={data.images.gallery}
+      />
       <ExperienceTimeline experience={data.experience} />
       <SkillsGrid skills={data.skills} />
       <TechProjectsSection projects={data.tech_projects} />

@@ -5,9 +5,10 @@ interface HeroSectionProps {
   name: string;
   headline: string;
   tagline: string;
+  headshot: { url: string; alt: string };
 }
 
-export default function HeroSection({ name, headline, tagline }: HeroSectionProps) {
+export default function HeroSection({ name, headline, tagline, headshot }: HeroSectionProps) {
   return (
     <section className="relative flex items-center justify-center min-h-[calc(100vh-4rem)] px-4 overflow-hidden">
       {/* Background gradient orbs */}
@@ -44,8 +45,8 @@ export default function HeroSection({ name, headline, tagline }: HeroSectionProp
             <div className="absolute inset-0 bg-brand/20 rounded-full blur-[60px]" />
             <div className="relative w-full h-full rounded-3xl overflow-hidden border-2 border-brand/20 shadow-[0_0_40px_rgba(13,223,114,0.15)]">
               <Image
-                src="/images/szama.jpg"
-                alt="Maciej Szamowski"
+                src={headshot.url}
+                alt={headshot.alt}
                 fill
                 className="object-cover object-top"
                 priority
