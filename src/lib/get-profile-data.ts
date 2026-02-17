@@ -93,7 +93,7 @@ export async function getProfileData(): Promise<ProfileData> {
       profile: content.profile_text || cvFallback.profile,
       images: {
         headshot: {
-          url: assetUrl(content.headshot, "/images/szama.jpg"),
+          url: assetUrl(content.headshot, "/images/szama bez tła.png"),
           alt: assetAlt(content.headshot, "Maciej Szamowski"),
         },
         portrait: {
@@ -199,7 +199,7 @@ export async function getProfileData(): Promise<ProfileData> {
         tagline: "DIGITAL ONE MAN ARMY",
       },
       images: {
-        headshot: { url: "/images/szama.jpg", alt: "Maciej Szamowski" },
+        headshot: { url: "/images/szama bez tła.png", alt: "Maciej Szamowski" },
         portrait: { url: "/images/DSC04666.jpg", alt: "Maciej Szamowski - B&W portrait" },
         gallery: [
           { image: { url: "/images/96fb7a55-4414-411d-bca4-a08fc583555c.jpg", alt: "Speaking at TikTok event" }, caption: "TikTok CEE", position: "center" },
