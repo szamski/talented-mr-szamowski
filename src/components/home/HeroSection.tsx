@@ -37,23 +37,23 @@ export default function HeroSection({ name, headline, tagline, headshot }: HeroS
           </div>
         </div>
 
-        {/* Photo — transparent PNG, 20% bigger, CSS mask fade to transparent */}
+        {/* Photo — transparent PNG, CSS mask fade to transparent */}
         <div className="relative hidden lg:flex justify-center animate-fade-in">
           <div className="relative w-125 h-165 xl:w-145 xl:h-190">
-            {/* Glow behind figure */}
-            <div className="absolute bottom-20 left-1/2 -translate-x-1/2 w-96 h-96 bg-brand/12 rounded-full blur-[120px]" />
-            {/* Green accent rings behind */}
-            <div className="absolute bottom-28 left-1/2 -translate-x-1/2 w-80 h-80 xl:w-88 xl:h-88 rounded-full border border-brand/15" />
-            <div className="absolute bottom-20 left-1/2 -translate-x-1/2 w-96 h-96 xl:w-104 xl:h-104 rounded-full border border-brand/8" />
-            {/* Photo — native img to preserve PNG transparency */}
+            {/* Glow behind figure — z-0 */}
+            <div className="absolute z-0 bottom-20 left-1/2 -translate-x-1/2 w-96 h-96 bg-brand/12 rounded-full blur-[120px]" />
+            {/* Green accent rings behind — z-0 */}
+            <div className="absolute z-0 bottom-28 left-1/2 -translate-x-1/2 w-80 h-80 xl:w-88 xl:h-88 rounded-full border border-brand/15" />
+            <div className="absolute z-0 bottom-20 left-1/2 -translate-x-1/2 w-96 h-96 xl:w-104 xl:h-104 rounded-full border border-brand/8" />
+            {/* Photo — z-10, native img to preserve PNG transparency */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={headshot.url}
               alt={headshot.alt}
-              className="absolute inset-0 w-full h-full object-contain object-bottom drop-shadow-[0_0_40px_rgba(13,223,114,0.12)]"
+              className="absolute z-10 inset-0 w-full h-full object-contain object-bottom drop-shadow-[0_0_40px_rgba(13,223,114,0.12)]"
               style={{
-                maskImage: "linear-gradient(to bottom, black 60%, transparent 100%)",
-                WebkitMaskImage: "linear-gradient(to bottom, black 60%, transparent 100%)",
+                maskImage: "linear-gradient(to bottom, black calc(100% - 80px), transparent 100%)",
+                WebkitMaskImage: "linear-gradient(to bottom, black calc(100% - 80px), transparent 100%)",
               }}
               fetchPriority="high"
             />
