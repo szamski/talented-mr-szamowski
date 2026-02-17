@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { storyblokFetch } from "@/lib/storyblok";
+import { storyblokFetch } from "@/lib/storyblok-fetch";
 import BlogPostContent from "@/components/blog/BlogPostContent";
 import RelatedPosts from "@/components/blog/RelatedPosts";
 import ShareLinks from "@/components/ui/ShareLinks";

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { storyblokFetch } from "@/lib/storyblok";
+import { storyblokFetch } from "@/lib/storyblok-fetch";
 import GlassCard from "@/components/ui/GlassCard";
 
 export const dynamic = "force-dynamic";

@@ -1,4 +1,4 @@
-import { storyblokFetch } from "./storyblok";
+import { storyblokFetch } from "./storyblok-fetch";
 import cvFallback from "../../maciek_szamowski_cv.json";
 
 export interface ProfileData {

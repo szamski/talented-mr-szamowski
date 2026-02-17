@@ -1,4 +1,4 @@
-import { storyblokFetch } from "@/lib/storyblok";
+import { storyblokFetch } from "@/lib/storyblok-fetch";
 import type { StoryblokArticle } from "@/lib/types";
 import BlogCard from "./BlogCard";
 

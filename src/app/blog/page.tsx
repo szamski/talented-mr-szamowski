@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { storyblokFetch } from "@/lib/storyblok";
+import { storyblokFetch } from "@/lib/storyblok-fetch";
 import BlogCard from "@/components/blog/BlogCard";
 import Pagination from "@/components/ui/Pagination";
 import Tag from "@/components/ui/Tag";
