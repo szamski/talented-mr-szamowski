@@ -38,19 +38,25 @@ export default function HeroSection({ name, headline, tagline, headshot }: HeroS
           </div>
         </div>
 
-        {/* Photo */}
+        {/* Photo — transparent PNG, floats over background */}
         <div className="relative hidden lg:flex justify-center animate-fade-in">
-          <div className="relative w-80 h-80 xl:w-96 xl:h-96">
-            {/* Glow behind photo */}
-            <div className="absolute inset-0 bg-brand/20 rounded-full blur-[60px]" />
-            <div className="relative w-full h-full rounded-3xl overflow-hidden border-2 border-brand/20 shadow-[0_0_40px_rgba(13,223,114,0.15)]">
+          <div className="relative w-[340px] h-[440px] xl:w-[400px] xl:h-[520px]">
+            {/* Glow behind figure */}
+            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-brand/20 rounded-full blur-[80px]" />
+            {/* Green accent ring behind */}
+            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 w-72 h-72 xl:w-80 xl:h-80 rounded-full border border-brand/15" />
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 w-80 h-80 xl:w-[22rem] xl:h-[22rem] rounded-full border border-brand/8" />
+            {/* Photo */}
+            <div className="relative w-full h-full">
               <Image
                 src={headshot.url}
                 alt={headshot.alt}
                 fill
-                className="object-cover object-top"
+                className="object-contain object-bottom drop-shadow-[0_0_30px_rgba(13,223,114,0.15)]"
                 priority
               />
+              {/* Bottom fade into background */}
+              <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#050a08] to-transparent" />
             </div>
           </div>
         </div>
