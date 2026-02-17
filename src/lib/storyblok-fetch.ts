@@ -2,7 +2,6 @@ const STORYBLOK_CDN = "https://api.storyblok.com/v2";
 const STORYBLOK_MAPI = "https://mapi.storyblok.com/v1";
 const SPACE_ID = "290596128883130";
 
-// Use Management API (no EU redirect issues from US servers)
 export async function storyblokFetch(
   path: string,
   params: Record<string, string | number> = {}
@@ -12,7 +11,7 @@ export async function storyblokFetch(
 
   // Try Management API first (reliable from any region)
   if (mgmtToken) {
-    return storyblokMgmtFetch(path, params, mgmtToken);
+    return mapiQuery(path, params, mgmtToken);
   }
 
   // Fallback to CDN API (works locally / from EU)
@@ -34,46 +33,62 @@ export async function storyblokFetch(
   return response.json();
 }
 
-async function storyblokMgmtFetch(
-  path: string,
-  params: Record<string, string | number>,
-  token: string
-) {
-  // Map CDN paths to Management API paths
-  let mapiPath: string;
-  const searchParams = new URLSearchParams();
-
-  if (path === "cdn/stories" || path.startsWith("cdn/stories?")) {
-    mapiPath = `${STORYBLOK_MAPI}/spaces/${SPACE_ID}/stories`;
-    for (const [k, v] of Object.entries(params)) {
-      searchParams.set(k, String(v));
-    }
-  } else if (path.startsWith("cdn/stories/")) {
-    const slug = path.replace("cdn/stories/", "");
-    mapiPath = `${STORYBLOK_MAPI}/spaces/${SPACE_ID}/stories`;
-    searchParams.set("with_slug", slug);
-  } else {
-    mapiPath = `${STORYBLOK_MAPI}/spaces/${SPACE_ID}/${path.replace("cdn/", "")}`;
-  }
-
-  const url = `${mapiPath}?${searchParams}`;
+async function mapiFetch(url: string, token: string) {
   const response = await fetch(url, {
     headers: { Authorization: token },
     cache: "no-store",
   });
-
   if (!response.ok) {
     throw new Error(`Storyblok MAPI error: ${response.status}`);
   }
+  return response.json();
+}
 
-  const data = await response.json();
+async function mapiQuery(
+  path: string,
+  params: Record<string, string | number>,
+  token: string
+) {
+  const base = `${STORYBLOK_MAPI}/spaces/${SPACE_ID}`;
 
-  // Normalize MAPI response to match CDN format
-  if (data.story) {
-    return data;
+  // List stories: cdn/stories
+  if (path === "cdn/stories") {
+    const searchParams = new URLSearchParams();
+    for (const [k, v] of Object.entries(params)) {
+      searchParams.set(k, String(v));
+    }
+
+    // First get story IDs
+    const listData = await mapiFetch(`${base}/stories?${searchParams}`, token);
+    const stories = listData.stories || [];
+
+    // Fetch full content for each story
+    const fullStories = await Promise.all(
+      stories.map(async (s: { id: number }) => {
+        const detail = await mapiFetch(`${base}/stories/${s.id}`, token);
+        return detail.story;
+      })
+    );
+
+    return { stories: fullStories, total: listData.total || fullStories.length };
   }
-  if (data.stories) {
-    return { stories: data.stories, total: data.total || data.stories.length };
+
+  // Single story by slug: cdn/stories/{slug}
+  if (path.startsWith("cdn/stories/")) {
+    const slug = path.replace("cdn/stories/", "");
+    const listData = await mapiFetch(
+      `${base}/stories?with_slug=${slug}`,
+      token
+    );
+    if (!listData.stories?.length) {
+      throw new Error(`Story not found: ${slug}`);
+    }
+    const detail = await mapiFetch(
+      `${base}/stories/${listData.stories[0].id}`,
+      token
+    );
+    return detail;
   }
-  return data;
+
+  throw new Error(`Unsupported MAPI path: ${path}`);
 }
