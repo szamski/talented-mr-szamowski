@@ -1,0 +1,157 @@
+{
+  "personal": {
+    "name": "Maciej Szamowski",
+    "headline": "Marketing and Growth Leader | Business and Operations Director",
+    "phone": "+48 793 324 715",
+    "email": "maciek.szamowski@gmail.com",
+    "location": "Warsaw, Poland"
+  },
+  "profile": "Marketing and business leader with 15+ years of experience scaling brands, teams and revenue across SaaS, gaming, ecommerce and consumer electronics. Builds marketing engines, leads high-performing teams, and implements data and automation to increase acquisition, retention and ROI. Combines strategic planning with operational execution.",
+  "target_roles": [
+    "Head of Marketing",
+    "Marketing Director",
+    "CMO",
+    "Business Director",
+    "Operations Director"
+  ],
+  "experience": [
+    {
+      "title": "Business Director",
+      "company": "Foap",
+      "company_description": "creator marketplace and UGC platform",
+      "period": "2025 - present",
+      "achievements": [
+        "Lead sales, marketing and operations, driving platform growth across creator and brand segments.",
+        "Built automated business systems (Python/Next.js) reducing campaign workflow time and improving throughput.",
+        "Partner with product to translate customer feedback into roadmap priorities."
+      ]
+    },
+    {
+      "title": "Client Service Director",
+      "company": "pro/porcja.agency",
+      "company_description": "digital performance agency",
+      "period": "2024 - 2025",
+      "achievements": [
+        "Directed client growth and account strategy across multiple verticals.",
+        "Increased revenue 2× in six months and improved delivery efficiency.",
+        "Strengthened marketing execution frameworks and reporting standards."
+      ]
+    },
+    {
+      "title": "Head of Marketing",
+      "company": "Selmo",
+      "company_description": "live-commerce SaaS for ecommerce",
+      "period": "2023 - 2024",
+      "achievements": [
+        "Built in-house marketing function from the ground up (paid, content, brand, CRM).",
+        "Implemented data-driven growth operations and automation across channels.",
+        "Achieved 2× ROAS increase year over year through funnel optimisation and audience insights."
+      ]
+    },
+    {
+      "title": "Brand Strategy Lead",
+      "company": "TikTok",
+      "company_description": "Central & Eastern Europe, consumer technology and digital media",
+      "period": "2021 - 2023",
+      "achievements": [
+        "Developed regional marketing and brand strategy improving perception and adoption.",
+        "Designed go-to-market programs supporting category and vertical expansion.",
+        "Led cross-functional teams across strategy, content, sales enablement and partnerships."
+      ]
+    },
+    {
+      "title": "Digital Manager",
+      "company": "Ubisoft",
+      "company_description": "Central & Eastern Europe, AAA gaming publisher",
+      "period": "2018 - 2021",
+      "achievements": [
+        "Owned digital sales and marketing execution for CEE region.",
+        "Implemented campaign plans driving double-digit YoY uplift in digital revenues.",
+        "Managed Ubisoft+, Ubisoft Connect and priority title launches."
+      ]
+    },
+    {
+      "title": "Social Media Manager",
+      "company": "Samsung Electronics",
+      "company_description": "consumer electronics",
+      "period": "2016 - 2018",
+      "achievements": [
+        "Delivered 40+ annual campaigns and cross-market social programs.",
+        "Managed transition to new agency ecosystem and multi-channel workflows.",
+        "Supported brand presence, audience growth and commercial objectives."
+      ]
+    },
+    {
+      "title": "Account Manager",
+      "company": "MEC / Wavemaker",
+      "company_description": "global media agency",
+      "period": "2012 - 2016",
+      "achievements": [
+        "Led campaign strategy and execution across 15+ brands (CPG, automotive, retail).",
+        "Managed multi-million PLN budgets and a team of four.",
+        "Strengthened channel planning and measurement capabilities."
+      ]
+    },
+    {
+      "title": "Account Executive",
+      "company": "Monday Agency",
+      "company_description": "digital agency",
+      "period": "2010 - 2012",
+      "achievements": [
+        "Delivered full-funnel social media execution for top tech brands (ASUS, Acer, SAP).",
+        "Developed early content, analytics and community operations processes."
+      ]
+    }
+  ],
+  "tech_projects": [
+    {
+      "name": "Foap automation suite",
+      "description": "Automation of lead-to-campaign workflows improving operational efficiency",
+      "tech_stack": ["Python", "Next.js"]
+    },
+    {
+      "name": "TikTok analytics dashboard",
+      "description": "Campaign reporting automation using TikTok Business API",
+      "tech_stack": ["Python", "HTML", "TikTok Business API"]
+    },
+    {
+      "name": "Agency operations tracker",
+      "description": "Delivery and SLA visibility system",
+      "tech_stack": ["Monday.com"]
+    },
+    {
+      "name": "Copa City & Triple Espresso websites",
+      "description": "High traffic websites built with headless CMS",
+      "tech_stack": ["Next.js", "Storyblok"]
+    }
+  ],
+  "skills": [
+    "Marketing Leadership",
+    "Brand Strategy",
+    "Growth Marketing",
+    "Demand Generation",
+    "GTM Planning",
+    "Revenue and P&L Ownership",
+    "Team Management",
+    "Operations",
+    "Marketing Automation",
+    "Data and Analytics",
+    "Stakeholder Alignment",
+    "Product Collaboration",
+    "Digital Marketing",
+    "Performance Marketing",
+    "CRM",
+    "MarTech",
+    "Go-to-Market Strategy"
+  ],
+  "education": {
+    "degree": "Bachelor of Arts",
+    "institution": "Collegium Civitas",
+    "location": "Warsaw, Poland",
+    "period": "2009 - 2012"
+  },
+  "additional": [
+    "Guest Lecturer, Gaming Marketing — ISART Digital, Nice",
+    "Former Columnist — iMagazine"
+  ]
+}

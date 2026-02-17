@@ -1,0 +1,98 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme {
+  --color-brand: #0ddf72;
+  --color-brand-secondary: #dafce0;
+  --color-dark-green: #1d392b;
+  --color-surface: rgba(255, 255, 255, 0.05);
+  --color-surface-hover: rgba(255, 255, 255, 0.1);
+  --color-border-glass: rgba(255, 255, 255, 0.1);
+  --color-border-brand: rgba(13, 223, 114, 0.2);
+
+  --font-sans: "Inter", system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: #050a08;
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -20%, rgba(13, 223, 114, 0.08), transparent),
+      radial-gradient(ellipse 60% 40% at 0% 50%, rgba(29, 57, 43, 0.25), transparent),
+      radial-gradient(ellipse 60% 40% at 100% 80%, rgba(13, 223, 114, 0.04), transparent);
+    background-attachment: fixed;
+    color: #ffffff;
+    min-height: 100vh;
+  }
+
+  ::selection {
+    background: rgba(13, 223, 114, 0.3);
+    color: #ffffff;
+  }
+}
+
+@layer components {
+  .glass {
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 1rem;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+  }
+
+  .glass-hover {
+    transition: all 0.3s ease;
+  }
+
+  .glass-hover:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(13, 223, 114, 0.3);
+    box-shadow: 0 0 20px rgba(13, 223, 114, 0.1);
+  }
+
+  .text-gradient {
+    background: linear-gradient(135deg, #0ddf72, #dafce0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .glow-brand {
+    box-shadow: 0 0 30px rgba(13, 223, 114, 0.15);
+  }
+}
+
+@layer utilities {
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-out forwards;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.6s ease-out forwards;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

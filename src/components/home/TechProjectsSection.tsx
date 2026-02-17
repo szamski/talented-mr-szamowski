@@ -1,0 +1,39 @@
+import GlassCard from "@/components/ui/GlassCard";
+import Tag from "@/components/ui/Tag";
+
+interface TechProject {
+  name: string;
+  description: string;
+  tech_stack: string[];
+}
+
+interface TechProjectsSectionProps {
+  projects: TechProject[];
+}
+
+export default function TechProjectsSection({
+  projects,
+}: TechProjectsSectionProps) {
+  return (
+    <section className="max-w-6xl mx-auto px-4 sm:px-6 py-20">
+      <h2 className="text-3xl sm:text-4xl font-bold mb-8">
+        Tech <span className="text-gradient">Projects</span>
+      </h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {projects.map((project) => (
+          <GlassCard key={project.name} hover className="p-6">
+            <h3 className="text-lg font-semibold text-white mb-2">
+              {project.name}
+            </h3>
+            <p className="text-sm text-gray-400 mb-4">{project.description}</p>
+            <div className="flex flex-wrap gap-2">
+              {project.tech_stack.map((tech) => (
+                <Tag key={tech}>{tech}</Tag>
+              ))}
+            </div>
+          </GlassCard>
+        ))}
+      </div>
+    </section>
+  );
+}
