@@ -6,7 +6,7 @@ interface AboutSectionProps {
   profile: string;
   targetRoles: string[];
   portrait: { url: string; alt: string };
-  gallery: { image: { url: string; alt: string }; caption: string }[];
+  gallery: { image: { url: string; alt: string }; caption: string; position: string }[];
 }
 
 export default function AboutSection({
@@ -61,6 +61,7 @@ export default function AboutSection({
               alt={item.image.alt}
               fill
               className="object-cover"
+              style={{ objectPosition: item.position }}
             />
             <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent" />
             <span className="absolute bottom-3 left-3 text-xs text-white/80 font-medium">

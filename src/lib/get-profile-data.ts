@@ -20,7 +20,7 @@ export interface ProfileData {
   images: {
     headshot: StoryblokImage;
     portrait: StoryblokImage;
-    gallery: { image: StoryblokImage; caption: string }[];
+    gallery: { image: StoryblokImage; caption: string; position: string }[];
   };
   experience: {
     title: string;
@@ -62,9 +62,7 @@ export async function getProfileData(): Promise<ProfileData> {
     });
     if (!data.stories?.length) throw new Error("No profile story found");
     const content = data.stories[0].content;
-    console.log("[Storyblok] content keys:", Object.keys(content));
     console.log("[Storyblok] Profile loaded, name:", content.name);
-    console.log("[Storyblok] headshot:", JSON.stringify(content.headshot)?.slice(0, 200));
 
     const assetUrl = (field: { filename?: string; alt?: string } | undefined, fallback: string) =>
       field?.filename || fallback;
@@ -97,6 +95,7 @@ export async function getProfileData(): Promise<ProfileData> {
               alt: assetAlt(content.gallery_1, "Speaking at TikTok event"),
             },
             caption: content.gallery_1_caption || "TikTok CEE",
+            position: content.gallery_1_position || "center",
           },
           {
             image: {
@@ -104,6 +103,7 @@ export async function getProfileData(): Promise<ProfileData> {
               alt: assetAlt(content.gallery_2, "At ISART Digital gaming wall"),
             },
             caption: content.gallery_2_caption || "ISART Digital",
+            position: content.gallery_2_position || "center",
           },
           {
             image: {
@@ -111,6 +111,7 @@ export async function getProfileData(): Promise<ProfileData> {
               alt: assetAlt(content.gallery_3, "Maciej at event"),
             },
             caption: content.gallery_3_caption || "Conference",
+            position: content.gallery_3_position || "center",
           },
         ],
       },
@@ -177,9 +178,9 @@ export async function getProfileData(): Promise<ProfileData> {
         headshot: { url: "/images/szama.jpg", alt: "Maciej Szamowski" },
         portrait: { url: "/images/DSC04666.jpg", alt: "Maciej Szamowski - B&W portrait" },
         gallery: [
-          { image: { url: "/images/96fb7a55-4414-411d-bca4-a08fc583555c.jpg", alt: "Speaking at TikTok event" }, caption: "TikTok CEE" },
-          { image: { url: "/images/2024-11-18.jpg", alt: "At ISART Digital gaming wall" }, caption: "ISART Digital" },
-          { image: { url: "/images/IMG_0747.jpeg", alt: "Maciej at event" }, caption: "Conference" },
+          { image: { url: "/images/96fb7a55-4414-411d-bca4-a08fc583555c.jpg", alt: "Speaking at TikTok event" }, caption: "TikTok CEE", position: "center" },
+          { image: { url: "/images/2024-11-18.jpg", alt: "At ISART Digital gaming wall" }, caption: "ISART Digital", position: "center" },
+          { image: { url: "/images/IMG_0747.jpeg", alt: "Maciej at event" }, caption: "Conference", position: "center" },
         ],
       },
     };

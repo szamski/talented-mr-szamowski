@@ -53,28 +53,45 @@ async function mapiQuery(
 
   // List stories: cdn/stories
   if (path === "cdn/stories") {
-    const searchParams = new URLSearchParams();
+    // MAPI doesn't support content_type filter — we need to fetch stories
+    // and filter by component type in the full content ourselves
+    const contentType = params.content_type as string | undefined;
+    const mapiParams = new URLSearchParams();
     for (const [k, v] of Object.entries(params)) {
-      searchParams.set(k, String(v));
+      // Skip content_type — MAPI doesn't support it properly
+      if (k === "content_type") continue;
+      mapiParams.set(k, String(v));
     }
 
-    // First get story IDs
-    const listUrl = `${base}/stories?${searchParams}`;
-    console.log("[MAPI] list URL:", listUrl);
-    const listData = await mapiFetch(listUrl, token);
+    // If content_type is set, fetch more stories so we can filter
+    if (contentType) {
+      mapiParams.set("per_page", "25");
+    }
+
+    const listData = await mapiFetch(`${base}/stories?${mapiParams}`, token);
     const stories = listData.stories || [];
-    console.log("[MAPI] list returned", stories.length, "stories, IDs:", stories.map((s: { id: number }) => s.id));
 
     // Fetch full content for each story
     const fullStories = await Promise.all(
       stories.map(async (s: { id: number }) => {
         const detail = await mapiFetch(`${base}/stories/${s.id}`, token);
-        console.log("[MAPI] detail for", s.id, "content keys:", Object.keys(detail.story?.content || {}));
         return detail.story;
       })
     );
 
-    return { stories: fullStories, total: listData.total || fullStories.length };
+    // Filter by component type if content_type was specified
+    const filtered = contentType
+      ? fullStories.filter(
+          (s: { content?: { component?: string } }) =>
+            s.content?.component === contentType
+        )
+      : fullStories;
+
+    // Apply per_page limit from original params
+    const perPage = params.per_page ? Number(params.per_page) : filtered.length;
+    const result = filtered.slice(0, perPage);
+
+    return { stories: result, total: filtered.length };
   }
 
   // Single story by slug: cdn/stories/{slug}
