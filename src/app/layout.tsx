@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import StoryblokProvider from "@/components/storyblok/StoryblokProvider";
+import BackgroundEffects from "@/components/layout/BackgroundEffects";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -30,6 +31,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable} font-sans antialiased`}>
+        <BackgroundEffects />
         <StoryblokProvider>
           <Navbar />
           <main className="min-h-screen pt-16">{children}</main>

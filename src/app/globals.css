@@ -19,41 +19,10 @@
   }
 
   body {
-    background: #0a1f15;
+    background: #050a08;
     color: #ffffff;
     min-height: 100vh;
-    position: relative;
     overflow-x: hidden;
-  }
-
-  /* Subtle grid pattern */
-  body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    z-index: -2;
-    background:
-      linear-gradient(rgba(13, 223, 114, 0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(13, 223, 114, 0.04) 1px, transparent 1px);
-    background-size: 60px 60px;
-  }
-
-  /* Gradient overlays */
-  body::after {
-    content: "";
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-    background:
-      /* Hero glow — top center */
-      radial-gradient(ellipse 60% 45% at 50% -5%, rgba(13, 223, 114, 0.18), transparent),
-      /* Left warm glow */
-      radial-gradient(circle 700px at -5% 35%, rgba(29, 57, 43, 0.6), transparent),
-      /* Right accent */
-      radial-gradient(circle 500px at 105% 65%, rgba(13, 223, 114, 0.1), transparent),
-      /* Bottom subtle warmth */
-      radial-gradient(ellipse 70% 30% at 50% 100%, rgba(29, 57, 43, 0.3), transparent);
-    animation: bgPulse 25s ease-in-out infinite alternate;
   }
 
   ::selection {
@@ -62,25 +31,98 @@
   }
 }
 
-@keyframes bgPulse {
-  0% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0.8;
-  }
+/* ── Background effects ── */
+
+.grain-overlay {
+  position: absolute;
+  inset: -50%;
+  width: 200%;
+  height: 200%;
+  filter: url(#grain);
+  opacity: 0.035;
+  pointer-events: none;
+  animation: grainDrift 8s steps(4) infinite;
 }
+
+@keyframes grainDrift {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(-2%, -1%); }
+  50% { transform: translate(1%, 2%); }
+  75% { transform: translate(-1%, -2%); }
+}
+
+.dot-matrix {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(13, 223, 114, 0.08) 1px, transparent 1px);
+  background-size: 32px 32px;
+  mask-image: radial-gradient(ellipse 70% 50% at 50% 50%, black, transparent);
+  -webkit-mask-image: radial-gradient(ellipse 70% 50% at 50% 50%, black, transparent);
+}
+
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  will-change: transform;
+}
+
+.orb-1 {
+  width: 600px;
+  height: 600px;
+  top: -10%;
+  left: 30%;
+  background: radial-gradient(circle, rgba(13, 223, 114, 0.15), transparent 70%);
+  animation: float1 20s ease-in-out infinite;
+}
+
+.orb-2 {
+  width: 500px;
+  height: 500px;
+  bottom: 10%;
+  right: -5%;
+  background: radial-gradient(circle, rgba(29, 57, 43, 0.5), transparent 70%);
+  animation: float2 25s ease-in-out infinite;
+}
+
+.orb-3 {
+  width: 400px;
+  height: 400px;
+  top: 50%;
+  left: -5%;
+  background: radial-gradient(circle, rgba(13, 223, 114, 0.08), transparent 70%);
+  animation: float3 30s ease-in-out infinite;
+}
+
+@keyframes float1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(5%, 8%) scale(1.05); }
+  66% { transform: translate(-3%, -5%) scale(0.95); }
+}
+
+@keyframes float2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-6%, -4%) scale(1.08); }
+  66% { transform: translate(4%, 6%) scale(0.92); }
+}
+
+@keyframes float3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(8%, -6%) scale(1.1); }
+}
+
+/* ── Components ── */
 
 @layer components {
   .glass {
-    background: rgba(13, 223, 114, 0.05);
+    background: rgba(13, 223, 114, 0.04);
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
-    border: 1px solid rgba(13, 223, 114, 0.1);
+    border: 1px solid rgba(13, 223, 114, 0.08);
     border-radius: 1rem;
     box-shadow:
-      0 4px 30px rgba(0, 0, 0, 0.25),
-      inset 0 1px 0 rgba(255, 255, 255, 0.04);
+      0 4px 30px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.03);
   }
 
   .glass-hover {
@@ -88,12 +130,12 @@
   }
 
   .glass-hover:hover {
-    background: rgba(13, 223, 114, 0.1);
-    border-color: rgba(13, 223, 114, 0.3);
+    background: rgba(13, 223, 114, 0.08);
+    border-color: rgba(13, 223, 114, 0.25);
     box-shadow:
-      0 0 30px rgba(13, 223, 114, 0.1),
+      0 0 30px rgba(13, 223, 114, 0.08),
       0 8px 40px rgba(0, 0, 0, 0.2),
-      inset 0 1px 0 rgba(255, 255, 255, 0.06);
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
     transform: translateY(-2px);
   }
 
@@ -108,6 +150,8 @@
     box-shadow: 0 0 40px rgba(13, 223, 114, 0.2);
   }
 }
+
+/* ── Utilities ── */
 
 @layer utilities {
   .animate-fade-in {
