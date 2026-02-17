@@ -33,15 +33,23 @@ export async function storyblokFetch(
   return response.json();
 }
 
-async function mapiFetch(url: string, token: string) {
-  const response = await fetch(url, {
-    headers: { Authorization: token },
-    cache: "no-store",
-  });
-  if (!response.ok) {
-    throw new Error(`Storyblok MAPI error: ${response.status}`);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+async function mapiFetch(url: string, token: string, retries = 3): Promise<any> {
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    const response = await fetch(url, {
+      headers: { Authorization: token },
+      cache: "no-store",
+    });
+    if (response.status === 429 && attempt < retries) {
+      await new Promise((r) => setTimeout(r, 500 * (attempt + 1)));
+      continue;
+    }
+    if (!response.ok) {
+      throw new Error(`Storyblok MAPI error: ${response.status}`);
+    }
+    return response.json();
   }
-  return response.json();
+  throw new Error("Storyblok MAPI: max retries exceeded");
 }
 
 async function mapiQuery(
@@ -71,13 +79,12 @@ async function mapiQuery(
     const listData = await mapiFetch(`${base}/stories?${mapiParams}`, token);
     const stories = listData.stories || [];
 
-    // Fetch full content for each story
-    const fullStories = await Promise.all(
-      stories.map(async (s: { id: number }) => {
-        const detail = await mapiFetch(`${base}/stories/${s.id}`, token);
-        return detail.story;
-      })
-    );
+    // Fetch full content for each story (sequential to avoid rate limits)
+    const fullStories = [];
+    for (const s of stories as { id: number }[]) {
+      const detail = await mapiFetch(`${base}/stories/${s.id}`, token);
+      fullStories.push(detail.story);
+    }
 
     // Filter by component type if content_type was specified
     const filtered = contentType
