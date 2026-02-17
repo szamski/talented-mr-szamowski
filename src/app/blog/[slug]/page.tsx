@@ -43,7 +43,12 @@ export default async function BlogPostPage({ params }: Props) {
     notFound();
   }
 
-  const tags: string[] = story.content.tags || [];
+  const tags: string[] = story.content.tags
+    ? story.content.tags
+        .split(",")
+        .map((t: string) => t.trim())
+        .filter(Boolean)
+    : [];
 
   return (
     <article className="max-w-3xl mx-auto px-4 sm:px-6 py-20">

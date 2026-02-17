@@ -13,6 +13,7 @@ export default async function HomePage() {
       <HeroSection
         name={data.personal.name}
         headline={data.personal.headline}
+        tagline={data.personal.tagline}
       />
       <AboutSection profile={data.profile} targetRoles={data.target_roles} />
       <ExperienceTimeline experience={data.experience} />

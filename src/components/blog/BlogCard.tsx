@@ -27,8 +27,8 @@ export default function BlogCard({ story }: BlogCardProps) {
         )}
         <div className="p-5 sm:p-6">
           <div className="flex items-center gap-3 text-xs text-gray-500 mb-3">
-            {content.published_date && (
-              <time>{formatDate(content.published_date)}</time>
+            {content.published_at && (
+              <time>{formatDate(content.published_at)}</time>
             )}
             {content.author && <span>&middot; {content.author}</span>}
           </div>
@@ -38,11 +38,15 @@ export default function BlogCard({ story }: BlogCardProps) {
           <p className="text-sm text-gray-400 mb-4 line-clamp-2">
             {content.excerpt}
           </p>
-          {content.tags && content.tags.length > 0 && (
+          {content.tags && (
             <div className="flex flex-wrap gap-2">
-              {content.tags.map((tag) => (
-                <Tag key={tag}>{tag}</Tag>
-              ))}
+              {content.tags
+                .split(",")
+                .map((t) => t.trim())
+                .filter(Boolean)
+                .map((tag) => (
+                  <Tag key={tag}>{tag}</Tag>
+                ))}
             </div>
           )}
         </div>

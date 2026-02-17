@@ -26,8 +26,8 @@ export default function BlogPostContent({ story }: BlogPostContentProps) {
       )}
 
       <div className="flex items-center gap-3 text-sm text-gray-500 mb-4">
-        {content.published_date && (
-          <time>{formatDate(content.published_date)}</time>
+        {content.published_at && (
+          <time>{formatDate(content.published_at)}</time>
         )}
         {content.author && <span>&middot; {content.author}</span>}
       </div>
@@ -36,13 +36,17 @@ export default function BlogPostContent({ story }: BlogPostContentProps) {
         {content.title}
       </h1>
 
-      {content.tags && content.tags.length > 0 && (
+      {content.tags && (
         <div className="flex flex-wrap gap-2 mb-8">
-          {content.tags.map((tag) => (
-            <Tag key={tag} href={`/blog?tag=${tag}`}>
-              {tag}
-            </Tag>
-          ))}
+          {content.tags
+            .split(",")
+            .map((t) => t.trim())
+            .filter(Boolean)
+            .map((tag) => (
+              <Tag key={tag} href={`/blog?tag=${tag}`}>
+                {tag}
+              </Tag>
+            ))}
         </div>
       )}
 

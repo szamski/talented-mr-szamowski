@@ -6,8 +6,8 @@ export interface StoryblokArticle {
     excerpt: string;
     content?: unknown;
     featured_image?: { filename: string; alt?: string };
-    tags?: string[];
-    published_date?: string;
+    tags?: string;
+    published_at?: string;
     author?: string;
   };
 }

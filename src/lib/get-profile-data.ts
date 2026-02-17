@@ -6,6 +6,7 @@ export interface ProfileData {
   personal: {
     name: string;
     headline: string;
+    tagline: string;
     phone: string;
     email: string;
     location: string;
@@ -27,6 +28,20 @@ export interface ProfileData {
   skills: string[];
 }
 
+function parseLines(text: string): string[] {
+  return text
+    .split("\n")
+    .map((s) => s.trim())
+    .filter(Boolean);
+}
+
+function parseComma(text: string): string[] {
+  return text
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean);
+}
+
 export async function getProfileData(): Promise<ProfileData> {
   try {
     const storyblokApi = getStoryblokApi();
@@ -41,14 +56,16 @@ export async function getProfileData(): Promise<ProfileData> {
       personal: {
         name: content.name || cvFallback.personal.name,
         headline: content.headline || cvFallback.personal.headline,
+        tagline: content.tagline || "DIGITAL ONE MAN ARMY",
         phone: content.phone || cvFallback.personal.phone,
         email: content.email || cvFallback.personal.email,
         location: content.location || cvFallback.personal.location,
       },
-      profile: content.profile || cvFallback.profile,
-      target_roles: content.target_roles?.length
-        ? content.target_roles
-        : cvFallback.target_roles,
+      profile: content.profile_text || cvFallback.profile,
+      target_roles:
+        typeof content.target_roles === "string" && content.target_roles
+          ? parseLines(content.target_roles)
+          : cvFallback.target_roles,
       experience: content.experience?.length
         ? content.experience.map(
             (exp: {
@@ -56,13 +73,16 @@ export async function getProfileData(): Promise<ProfileData> {
               company: string;
               company_description: string;
               period: string;
-              achievements: string[];
+              achievements: string;
             }) => ({
               title: exp.title,
               company: exp.company,
               company_description: exp.company_description,
               period: exp.period,
-              achievements: exp.achievements || [],
+              achievements:
+                typeof exp.achievements === "string"
+                  ? parseLines(exp.achievements)
+                  : exp.achievements || [],
             })
           )
         : cvFallback.experience,
@@ -71,18 +91,30 @@ export async function getProfileData(): Promise<ProfileData> {
             (proj: {
               name: string;
               description: string;
-              tech_stack: string[];
+              tech_stack: string;
             }) => ({
               name: proj.name,
               description: proj.description,
-              tech_stack: proj.tech_stack || [],
+              tech_stack:
+                typeof proj.tech_stack === "string"
+                  ? parseComma(proj.tech_stack)
+                  : proj.tech_stack || [],
             })
           )
         : cvFallback.tech_projects,
-      skills: content.skills?.length ? content.skills : cvFallback.skills,
+      skills:
+        typeof content.skills === "string" && content.skills
+          ? parseLines(content.skills)
+          : cvFallback.skills,
     };
   } catch {
     // Storyblok not configured or "profile" story doesn't exist yet - use JSON fallback
-    return cvFallback;
+    return {
+      ...cvFallback,
+      personal: {
+        ...cvFallback.personal,
+        tagline: "DIGITAL ONE MAN ARMY",
+      },
+    };
   }
 }

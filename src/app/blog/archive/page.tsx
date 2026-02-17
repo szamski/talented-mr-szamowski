@@ -12,7 +12,7 @@ interface Story {
   slug: string;
   content: {
     title: string;
-    published_date?: string;
+    published_at?: string;
   };
 }
 
@@ -28,7 +28,7 @@ export default async function ArchivePage() {
       starts_with: "articles/",
       content_type: "article",
       per_page: 100,
-      sort_by: "content.published_date:desc",
+      sort_by: "content.published_at:desc",
     });
     stories = data.stories;
   } catch {
@@ -38,8 +38,8 @@ export default async function ArchivePage() {
   // Group stories by month/year
   const grouped: Record<string, Story[]> = {};
   for (const story of stories) {
-    const date = story.content.published_date
-      ? new Date(story.content.published_date)
+    const date = story.content.published_at
+      ? new Date(story.content.published_at)
       : new Date();
     const key = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
     if (!grouped[key]) grouped[key] = [];

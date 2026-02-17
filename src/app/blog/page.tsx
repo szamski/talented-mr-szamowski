@@ -35,7 +35,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
       content_type: "article",
       per_page: perPage,
       page,
-      sort_by: "content.published_date:desc",
+      sort_by: "content.published_at:desc",
       ...(tag && {
         filter_query: {
           tags: { any_in_array: tag },

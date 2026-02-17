@@ -4,9 +4,10 @@ import Button from "@/components/ui/Button";
 interface HeroSectionProps {
   name: string;
   headline: string;
+  tagline: string;
 }
 
-export default function HeroSection({ name, headline }: HeroSectionProps) {
+export default function HeroSection({ name, headline, tagline }: HeroSectionProps) {
   return (
     <section className="relative flex items-center justify-center min-h-[calc(100vh-4rem)] px-4 overflow-hidden">
       {/* Background gradient orbs */}
@@ -23,7 +24,7 @@ export default function HeroSection({ name, headline }: HeroSectionProps) {
             <span className="text-gradient">{name}</span>
           </h1>
           <p className="text-xl sm:text-2xl text-gray-400 mb-3 animate-slide-up">
-            Digital One Man Army
+            {tagline}
           </p>
           <p className="text-base sm:text-lg text-gray-500 mb-10 animate-slide-up">
             {headline}
