@@ -3,7 +3,7 @@ import Link from "next/link";
 import { storyblokFetch } from "@/lib/storyblok";
 import GlassCard from "@/components/ui/GlassCard";
 
-export const revalidate = 60;
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Blog Archive",
