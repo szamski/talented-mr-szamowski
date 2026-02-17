@@ -17,7 +17,10 @@ export async function storyblokFetch(
   });
 
   const url = `${STORYBLOK_BASE}/${path}?${searchParams}`;
-  const response = await fetch(url, { redirect: "follow" });
+  const response = await fetch(url, {
+    redirect: "follow",
+    cache: "no-store",
+  });
 
   if (!response.ok) {
     throw new Error(
