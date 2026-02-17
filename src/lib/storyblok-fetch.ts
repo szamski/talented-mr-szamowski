@@ -17,24 +17,16 @@ export async function storyblokFetch(
   });
 
   const url = `${STORYBLOK_BASE}/${path}?${searchParams}`;
-  console.log("[storyblokFetch] URL:", url.replace(token, "***"));
-
   const response = await fetch(url, {
     redirect: "follow",
     cache: "no-store",
   });
 
-  console.log("[storyblokFetch] Status:", response.status);
-
   if (!response.ok) {
-    const body = await response.text();
-    console.error("[storyblokFetch] Error body:", body);
     throw new Error(
       `Storyblok API error: ${response.status} ${response.statusText}`
     );
   }
 
-  const data = await response.json();
-  console.log("[storyblokFetch] Success, keys:", Object.keys(data));
-  return data;
+  return response.json();
 }

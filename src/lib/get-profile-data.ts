@@ -43,8 +43,13 @@ function parseComma(text: string): string[] {
 
 export async function getProfileData(): Promise<ProfileData> {
   try {
-    const data = await storyblokFetch("cdn/stories/profile");
-    const content = data.story.content;
+    // Find profile by content_type (resilient to slug/folder changes)
+    const data = await storyblokFetch("cdn/stories", {
+      content_type: "profile",
+      per_page: 1,
+    });
+    if (!data.stories?.length) throw new Error("No profile story found");
+    const content = data.stories[0].content;
     console.log("[Storyblok] Profile loaded, name:", content.name);
 
     return {
