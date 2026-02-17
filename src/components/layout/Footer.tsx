@@ -1,7 +1,17 @@
 import Link from "next/link";
-import { socialLinks } from "@/lib/constants";
 
-export default function Footer() {
+interface FooterProps {
+  name: string;
+  tagline: string;
+  description: string;
+  social: {
+    linkedin: string;
+    github: string;
+    whatsapp: string;
+  };
+}
+
+export default function Footer({ name, tagline, description, social }: FooterProps) {
   return (
     <footer className="border-t border-white/10 mt-20">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
@@ -9,12 +19,15 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <h3 className="text-lg font-bold text-brand mb-2">
-              Maciej Szamowski
+              {name}
             </h3>
             <p className="text-gray-400 text-sm">
-              Digital One Man Army.
+              {tagline}
               <br />
-              Marketing, Tech & Strategy.
+              {description}
+            </p>
+            <p className="text-xs text-gray-500 mt-4">
+              &copy; {new Date().getFullYear()} {name}. All rights reserved.
             </p>
           </div>
 
@@ -50,7 +63,7 @@ export default function Footer() {
             <ul className="space-y-2">
               <li>
                 <a
-                  href={socialLinks.linkedin}
+                  href={social.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-sm text-gray-400 hover:text-brand transition-colors"
@@ -60,7 +73,7 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  href={socialLinks.github}
+                  href={social.github}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-sm text-gray-400 hover:text-brand transition-colors"
@@ -70,7 +83,7 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  href={socialLinks.whatsapp}
+                  href={social.whatsapp}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-sm text-gray-400 hover:text-brand transition-colors"
@@ -80,14 +93,6 @@ export default function Footer() {
               </li>
             </ul>
           </div>
-        </div>
-
-        {/* Bottom bar */}
-        <div className="border-t border-white/10 mt-8 pt-8 text-center">
-          <p className="text-xs text-gray-500">
-            &copy; {new Date().getFullYear()} Maciej Szamowski. All rights
-            reserved.
-          </p>
         </div>
       </div>
     </footer>

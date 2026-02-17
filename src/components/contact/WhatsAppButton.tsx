@@ -1,9 +1,7 @@
-import { socialLinks } from "@/lib/constants";
-
-export default function WhatsAppButton() {
+export default function WhatsAppButton({ href }: { href: string }) {
   return (
     <a
-      href={socialLinks.whatsapp}
+      href={href}
       target="_blank"
       rel="noopener noreferrer"
       className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm bg-[#25D366] text-white hover:bg-[#20bd5a] transition-colors"

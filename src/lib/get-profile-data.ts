@@ -37,6 +37,18 @@ export interface ProfileData {
     slug?: string;
   }[];
   skills: string[];
+  social: {
+    linkedin: string;
+    github: string;
+    whatsapp: string;
+  };
+  pages: {
+    blog_description: string;
+    case_studies_description: string;
+    contact_subtitle: string;
+    footer_tagline: string;
+    footer_description: string;
+  };
 }
 
 function parseLines(text: string): string[] {
@@ -165,6 +177,18 @@ export async function getProfileData(): Promise<ProfileData> {
         typeof content.skills === "string" && content.skills
           ? parseLines(content.skills)
           : cvFallback.skills,
+      social: {
+        linkedin: content.linkedin_url || "https://linkedin.com/in/maciekszamowski",
+        github: content.github_url || "https://github.com/maciekszamowski",
+        whatsapp: content.whatsapp_url || "https://wa.me/48793324715",
+      },
+      pages: {
+        blog_description: content.blog_description || "Thoughts on marketing, technology, and business strategy.",
+        case_studies_description: content.case_studies_description || "Technical projects spanning automation, analytics, and web development.",
+        contact_subtitle: content.contact_subtitle || "Have a project in mind? Let's talk.",
+        footer_tagline: content.footer_tagline || "Digital One Man Army.",
+        footer_description: content.footer_description || "Marketing, Tech & Strategy.",
+      },
     };
   } catch (error) {
     console.error("[Storyblok] Profile fetch failed, using fallback:", error);
@@ -182,6 +206,18 @@ export async function getProfileData(): Promise<ProfileData> {
           { image: { url: "/images/2024-11-18.jpg", alt: "At ISART Digital gaming wall" }, caption: "ISART Digital", position: "center" },
           { image: { url: "/images/IMG_0747.jpeg", alt: "Maciej at event" }, caption: "Conference", position: "center" },
         ],
+      },
+      social: {
+        linkedin: "https://linkedin.com/in/maciekszamowski",
+        github: "https://github.com/maciekszamowski",
+        whatsapp: "https://wa.me/48793324715",
+      },
+      pages: {
+        blog_description: "Thoughts on marketing, technology, and business strategy.",
+        case_studies_description: "Technical projects spanning automation, analytics, and web development.",
+        contact_subtitle: "Have a project in mind? Let's talk.",
+        footer_tagline: "Digital One Man Army.",
+        footer_description: "Marketing, Tech & Strategy.",
       },
     };
   }

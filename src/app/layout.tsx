@@ -5,6 +5,7 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import StoryblokProvider from "@/components/storyblok/StoryblokProvider";
 import BackgroundEffects from "@/components/layout/BackgroundEffects";
+import { getProfileData } from "@/lib/get-profile-data";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -23,19 +24,26 @@ export const metadata: Metadata = {
   ),
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const data = await getProfileData();
+
   return (
     <html lang="en">
       <body className={`${inter.variable} font-sans antialiased`}>
         <BackgroundEffects />
         <StoryblokProvider>
-          <Navbar />
+          <Navbar name={data.personal.name} tagline={data.personal.tagline} />
           <main className="min-h-screen pt-16">{children}</main>
-          <Footer />
+          <Footer
+            name={data.personal.name}
+            tagline={data.pages.footer_tagline}
+            description={data.pages.footer_description}
+            social={data.social}
+          />
         </StoryblokProvider>
       </body>
     </html>

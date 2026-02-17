@@ -11,22 +11,27 @@ const navLinks = [
   { href: "/contact", label: "Contact" },
 ];
 
-export default function Navbar() {
+interface NavbarProps {
+  name: string;
+  tagline: string;
+}
+
+export default function Navbar({ name, tagline }: NavbarProps) {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 glass border-0 border-b border-brand/10">
+    <header className="fixed top-0 left-0 right-0 z-50 border-0 border-b border-brand/10 bg-[rgba(5,10,8,0.85)] backdrop-blur-xl">
       <nav className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
         <Link
           href="/"
           className="flex flex-col hover:opacity-80 transition-opacity"
         >
           <span className="text-base font-bold text-brand leading-tight">
-            Maciej Szamowski
+            {name}
           </span>
           <span className="text-[10px] text-gray-500 uppercase tracking-widest leading-tight">
-            Digital One Man Army
+            {tagline}
           </span>
         </Link>
 

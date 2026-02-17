@@ -1,10 +1,13 @@
-import { socialLinks } from "@/lib/constants";
+interface SocialLinksProps {
+  linkedin: string;
+  github: string;
+}
 
-export default function SocialLinks() {
+export default function SocialLinks({ linkedin, github }: SocialLinksProps) {
   return (
     <div className="flex items-center gap-3">
       <a
-        href={socialLinks.linkedin}
+        href={linkedin}
         target="_blank"
         rel="noopener noreferrer"
         className="inline-flex items-center justify-center w-12 h-12 rounded-xl border border-white/10 text-gray-400 hover:text-brand hover:border-brand/30 transition-all"
@@ -15,7 +18,7 @@ export default function SocialLinks() {
         </svg>
       </a>
       <a
-        href={socialLinks.github}
+        href={github}
         target="_blank"
         rel="noopener noreferrer"
         className="inline-flex items-center justify-center w-12 h-12 rounded-xl border border-white/10 text-gray-400 hover:text-brand hover:border-brand/30 transition-all"

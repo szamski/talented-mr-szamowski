@@ -39,7 +39,7 @@ export default function HeroSection({ name, headline, tagline, headshot }: HeroS
 
         {/* Photo — transparent PNG, CSS mask fade to transparent */}
         <div className="relative hidden lg:flex justify-center animate-fade-in">
-          <div className="relative w-125 h-165 xl:w-145 xl:h-190">
+          <div className="relative w-106 h-140 xl:w-124 xl:h-162">
             {/* Glow behind figure — z-0 */}
             <div className="absolute z-0 bottom-20 left-1/2 -translate-x-1/2 w-96 h-96 bg-brand/12 rounded-full blur-[120px]" />
             {/* Green accent rings behind — z-0 */}
@@ -50,10 +50,10 @@ export default function HeroSection({ name, headline, tagline, headshot }: HeroS
             <img
               src={headshot.url}
               alt={headshot.alt}
-              className="absolute z-10 inset-0 w-full h-full object-contain object-bottom drop-shadow-[0_0_40px_rgba(13,223,114,0.12)]"
+              className="absolute z-10 inset-0 w-full h-full object-cover object-top drop-shadow-[0_0_40px_rgba(13,223,114,0.12)]"
               style={{
-                maskImage: "linear-gradient(to bottom, black calc(100% - 80px), transparent 100%)",
-                WebkitMaskImage: "linear-gradient(to bottom, black calc(100% - 80px), transparent 100%)",
+                maskImage: "linear-gradient(to bottom, black calc(100% - 180px), transparent calc(100% - 20px))",
+                WebkitMaskImage: "linear-gradient(to bottom, black calc(100% - 180px), transparent calc(100% - 20px))",
               }}
               fetchPriority="high"
             />

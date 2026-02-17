@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { storyblokFetch } from "@/lib/storyblok-fetch";
+import { getProfileData } from "@/lib/get-profile-data";
 import GlassCard from "@/components/ui/GlassCard";
 import Tag from "@/components/ui/Tag";
 
@@ -25,6 +26,7 @@ interface CaseStudyStory {
 }
 
 export default async function CaseStudiesPage() {
+  const profileData = await getProfileData();
   let stories: CaseStudyStory[] = [];
 
   try {
@@ -44,7 +46,7 @@ export default async function CaseStudiesPage() {
         Case <span className="text-gradient">Studies</span>
       </h1>
       <p className="text-gray-400 mb-10">
-        Technical projects spanning automation, analytics, and web development.
+        {profileData.pages.case_studies_description}
       </p>
 
       {stories.length > 0 ? (

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { storyblokFetch } from "@/lib/storyblok-fetch";
+import { getProfileData } from "@/lib/get-profile-data";
 import BlogCard from "@/components/blog/BlogCard";
 import Pagination from "@/components/ui/Pagination";
 import Tag from "@/components/ui/Tag";
@@ -20,6 +21,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
   const page = Number(params.page) || 1;
   const perPage = 5;
   const tag = params.tag;
+  const profileData = await getProfileData();
 
   let stories: StoryblokArticle[] = [];
   let total = 0;
@@ -50,7 +52,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
         <span className="text-gradient">Blog</span>
       </h1>
       <p className="text-gray-400 mb-8">
-        Thoughts on marketing, technology, and business strategy.
+        {profileData.pages.blog_description}
       </p>
 
       {tag && (
