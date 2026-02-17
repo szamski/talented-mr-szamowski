@@ -1,7 +1,9 @@
 import { Resend } from "resend";
 import { NextRequest, NextResponse } from "next/server";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = process.env.RESEND_API_KEY
+  ? new Resend(process.env.RESEND_API_KEY)
+  : null;
 
 export async function POST(request: NextRequest) {
   try {
@@ -20,6 +22,13 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         { error: "Please provide a valid email address." },
         { status: 400 }
+      );
+    }
+
+    if (!resend) {
+      return NextResponse.json(
+        { error: "Contact form is not configured yet." },
+        { status: 503 }
       );
     }
 
