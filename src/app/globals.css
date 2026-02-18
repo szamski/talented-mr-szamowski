@@ -185,16 +185,15 @@
   }
 }
 
-/* ── Client logos — monochrome brand palette ── */
+/* ── Client logos — brand gradient palette ── */
 
-.client-logo {
-  filter: grayscale(1) brightness(0.7) contrast(0.9);
-  opacity: 0.45;
-  transition: all 0.5s ease;
+.client-logo-gradient {
+  background: #5ef5a0;
+  opacity: 0.35;
+  transition: all 0.4s ease;
 }
 
-.group:hover .client-logo {
-  filter: brightness(0) invert(1) sepia(1) saturate(5) hue-rotate(100deg);
+.group:hover .client-logo-gradient {
   opacity: 0.95;
 }
 

@@ -32,11 +32,20 @@ export default function ClientsSection({ clients }: ClientsSectionProps) {
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-8 items-center">
         {displayClients.map((client) => {
           const content = client.logo.url ? (
-            /* eslint-disable-next-line @next/next/no-img-element */
-            <img
-              src={client.logo.url}
-              alt={client.logo.alt}
-              className="h-10 w-auto max-w-full client-logo"
+            <div
+              className="client-logo-gradient h-10 w-full max-w-[140px]"
+              role="img"
+              aria-label={client.logo.alt}
+              style={{
+                WebkitMaskImage: `url(${client.logo.url})`,
+                maskImage: `url(${client.logo.url})`,
+                WebkitMaskSize: "contain",
+                maskSize: "contain",
+                WebkitMaskRepeat: "no-repeat",
+                maskRepeat: "no-repeat",
+                WebkitMaskPosition: "center",
+                maskPosition: "center",
+              }}
             />
           ) : (
             <span className="text-sm font-semibold text-gray-600 group-hover:text-brand transition-colors duration-500 tracking-wide uppercase">
