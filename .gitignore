@@ -49,5 +49,5 @@ next-env.d.ts
 
 /inspo/
 
-clients-fixed.png
-clients-section.png
+*.png
+!public/**/*.png

@@ -1,4 +1,5 @@
 import Button from "@/components/ui/Button";
+import ParticleField from "@/components/home/ParticleField";
 
 interface HeroSectionProps {
   name: string;
@@ -40,11 +41,8 @@ export default function HeroSection({ name, headline, tagline, headshot }: HeroS
         {/* Photo — transparent PNG, CSS mask fade to transparent */}
         <div className="relative hidden lg:flex justify-center animate-fade-in">
           <div className="relative w-106 h-140 xl:w-124 xl:h-162">
-            {/* Glow behind figure — z-0 */}
-            <div className="absolute z-0 bottom-20 left-1/2 -translate-x-1/2 w-96 h-96 bg-brand/12 rounded-full blur-[120px]" />
-            {/* Green accent rings behind — z-0 */}
-            <div className="absolute z-0 bottom-28 left-1/2 -translate-x-1/2 w-80 h-80 xl:w-88 xl:h-88 rounded-full border border-brand/15" />
-            <div className="absolute z-0 bottom-20 left-1/2 -translate-x-1/2 w-96 h-96 xl:w-104 xl:h-104 rounded-full border border-brand/8" />
+            {/* Particle field behind figure — z-0 */}
+            <ParticleField />
             {/* Photo — z-10, native img to preserve PNG transparency */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
