@@ -197,6 +197,27 @@
   opacity: 0.95;
 }
 
+/* ── CRT flicker effect for Easter egg link ── */
+
+@keyframes crt-flicker {
+  0%, 100% {
+    opacity: 1;
+    filter: drop-shadow(0 0 2px rgba(13, 223, 114, 0.4));
+  }
+  33% {
+    opacity: 0.9;
+    filter: drop-shadow(0 0 8px rgba(13, 223, 114, 0.7));
+  }
+  66% {
+    opacity: 1;
+    filter: drop-shadow(0 0 4px rgba(13, 223, 114, 0.5));
+  }
+}
+
+.crt-flicker {
+  animation: crt-flicker 0.15s steps(2, start) infinite;
+}
+
 /* ── Skeleton / shimmer loading states ── */
 
 @keyframes shimmer {

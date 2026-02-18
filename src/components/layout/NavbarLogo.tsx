@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState, useRef } from "react";
 
-const PROJECT_START = new Date("2026-16-03");
+const PROJECT_START = new Date("2025-12-03");
 
 function getWorkStats() {
   const now = new Date();
@@ -18,26 +18,36 @@ function getWorkStats() {
   return { hours, workingDays };
 }
 
-const SEQUENCE = [
-  "Hello, User...",
-  "Wake Up...",
-  "How many days did I work on this?",
+type SequenceItem = string | (() => string) | { text: string; link: string };
+
+const SEQUENCE: SequenceItem[] = [
+  "Vision established...",
+  "Complexity distilled.",
+  "Latency eliminated.",
   () => {
     const s = getWorkStats();
-    return `${s.hours}h = ${s.workingDays} working days`;
+    return `Surgical execution: ${s.hours}h total.`;
   },
-  "knock, knock",
-  "fill the contact form...",
-] as const;
+  "Why wait months for what I do in days?",
+  { text: "Initiate strategic dialogue ", link: "/contact" },
+];
 
-const TYPE_SPEED = 45;
+const TYPE_SPEED = 30;
 const PAUSE_BETWEEN_STEPS = 2000;
 const PAUSE_AFTER_LAST = 3000;
 const IDLE_PAUSE = 15000;
 
+function getStepText(step: SequenceItem): string {
+  if (typeof step === "function") return step();
+  if (typeof step === "object") return step.text + "here.";
+  return step;
+}
+
 export default function NavbarLogo() {
   const [displayText, setDisplayText] = useState("");
   const [isTyping, setIsTyping] = useState(false);
+  const [currentStep, setCurrentStep] = useState<SequenceItem | null>(null);
+  const [stepDone, setStepDone] = useState(false);
   const cancelRef = useRef(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -78,7 +88,6 @@ export default function NavbarLogo() {
     }
 
     async function runLoop() {
-      // Wait before first sequence
       await wait(IDLE_PAUSE);
 
       while (!cancelRef.current) {
@@ -88,10 +97,13 @@ export default function NavbarLogo() {
           if (cancelRef.current) break;
 
           const step = SEQUENCE[i];
-          const text = typeof step === "function" ? step() : step;
+          const text = getStepText(step);
 
+          setCurrentStep(step);
+          setStepDone(false);
           setDisplayText("");
           await typeText(text);
+          setStepDone(true);
 
           if (cancelRef.current) break;
 
@@ -100,8 +112,9 @@ export default function NavbarLogo() {
           await wait(pause);
         }
 
-        // Back to idle cursor
         setIsTyping(false);
+        setCurrentStep(null);
+        setStepDone(false);
         setDisplayText("");
 
         if (cancelRef.current) break;
@@ -113,6 +126,8 @@ export default function NavbarLogo() {
 
     return cleanup;
   }, []);
+
+  const isLinkStep = typeof currentStep === "object" && currentStep !== null;
 
   return (
     <Link
@@ -126,10 +141,23 @@ export default function NavbarLogo() {
         className="h-8 w-auto"
       />
 
-      {/* Cursor / Matrix text — absolutely positioned so logo never shifts */}
+      {/* Cursor / typed text — absolutely positioned so logo never shifts */}
       <div className="absolute left-full flex items-center h-8 ml-1">
         {!isTyping ? (
           <span className="inline-block w-2.5 h-4 bg-brand animate-pulse rounded-px" />
+        ) : isLinkStep && stepDone ? (
+          <span className="font-mono text-sm leading-none text-brand whitespace-nowrap">
+            {currentStep.text}
+            <Link
+              href={currentStep.link}
+              className="underline crt-flicker"
+              onClick={(e) => e.stopPropagation()}
+            >
+              here
+            </Link>
+            .
+            <span className="animate-pulse">▋</span>
+          </span>
         ) : (
           <span className="font-mono text-sm leading-none text-brand whitespace-nowrap">
             {displayText}
