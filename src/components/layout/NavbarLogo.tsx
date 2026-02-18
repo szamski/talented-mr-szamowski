@@ -21,15 +21,16 @@ function getWorkStats() {
 type SequenceItem = string | (() => string) | { text: string; link: string };
 
 const SEQUENCE: SequenceItem[] = [
-  "Vision established...",
-  "Complexity distilled.",
-  "Latency eliminated.",
+  "Months of work?",
+  "I deliver in days.",
   () => {
     const s = getWorkStats();
-    return `Surgical execution: ${s.hours}h total.`;
+    return `${s.hours}h logged so far.`;
   },
-  "Why wait months for what I do in days?",
-  { text: "Initiate strategic dialogue ", link: "/contact" },
+  "Strategy to code.",
+  "One person. Full stack.",
+  "Ready to start?",
+  { text: "Let's talk ", link: "/contact" },
 ];
 
 const TYPE_SPEED = 30;
@@ -142,7 +143,10 @@ export default function NavbarLogo() {
       />
 
       {/* Cursor / typed text — absolutely positioned so logo never shifts */}
-      <div className="absolute left-full flex items-center h-8 ml-1">
+      <div
+        className="absolute left-full flex items-center h-8 ml-1 max-w-[calc(100vw-180px)] overflow-hidden"
+        style={{ maskImage: "linear-gradient(to right, black 70%, transparent 100%)", WebkitMaskImage: "linear-gradient(to right, black 70%, transparent 100%)" }}
+      >
         {!isTyping ? (
           <span className="inline-block w-2.5 h-4 bg-brand animate-pulse rounded-px" />
         ) : isLinkStep && stepDone ? (

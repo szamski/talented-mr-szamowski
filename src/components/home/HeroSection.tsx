@@ -9,7 +9,7 @@ interface HeroSectionProps {
 
 export default function HeroSection({ name, headline, tagline, headshot }: HeroSectionProps) {
   return (
-    <section className="relative flex items-start justify-center min-h-[calc(100vh-4rem)] pt-8 px-4 overflow-hidden">
+    <section className="relative flex items-start justify-center pb-16 sm:pb-0 sm:min-h-[calc(100svh-4rem)] pt-8 px-4 overflow-hidden">
       {/* Background gradient orbs */}
       <div className="absolute top-1/4 -left-32 w-96 h-96 bg-brand/10 rounded-full blur-[128px]" />
       <div className="absolute bottom-1/4 -right-32 w-96 h-96 bg-dark-green/30 rounded-full blur-[128px]" />
@@ -23,10 +23,10 @@ export default function HeroSection({ name, headline, tagline, headshot }: HeroS
           <h1 className="text-5xl sm:text-7xl lg:text-8xl font-bold mb-4 animate-fade-in">
             <span className="text-gradient">{name}</span>
           </h1>
-          <p className="text-xl sm:text-2xl text-gray-400 mb-3 animate-slide-up">
+          <p className="text-base sm:text-2xl text-gray-400 mb-3 animate-slide-up">
             {tagline}
           </p>
-          <p className="text-base sm:text-lg text-gray-500 mb-10 animate-slide-up">
+          <p className="text-xs sm:text-lg text-gray-500 mb-6 sm:mb-10 animate-slide-up">
             {headline}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-slide-up">
