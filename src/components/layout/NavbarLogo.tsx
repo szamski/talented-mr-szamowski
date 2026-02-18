@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState, useRef } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState, useRef, useCallback } from "react";
 
 const PROJECT_START = new Date("2026-02-17");
 
@@ -130,10 +131,26 @@ export default function NavbarLogo() {
 
   const isLinkStep = typeof currentStep === "object" && currentStep !== null;
 
+  const router = useRouter();
+
+  const handleLogoClick = useCallback(
+    (e: React.MouseEvent) => {
+      // Don't navigate to "/" if the click was on the inner contact link
+      if ((e.target as HTMLElement).closest("a[href]")) return;
+      router.push("/");
+    },
+    [router]
+  );
+
   return (
-    <Link
-      href="/"
-      className="relative flex items-center h-8 hover:opacity-80 transition-opacity"
+    <div
+      role="link"
+      tabIndex={0}
+      onClick={handleLogoClick}
+      onKeyDown={(e) => {
+        if (e.key === "Enter") router.push("/");
+      }}
+      className="relative flex items-center h-8 hover:opacity-80 transition-opacity cursor-pointer"
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
@@ -155,7 +172,6 @@ export default function NavbarLogo() {
             <Link
               href={currentStep.link}
               className="underline crt-flicker"
-              onClick={(e) => e.stopPropagation()}
             >
               here
             </Link>
@@ -169,6 +185,6 @@ export default function NavbarLogo() {
           </span>
         )}
       </div>
-    </Link>
+    </div>
   );
 }
