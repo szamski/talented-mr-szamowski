@@ -1,4 +1,5 @@
 import Link from "next/link";
+import CookieSettingsButton from "@/components/cookie/CookieSettingsButton";
 
 interface FooterProps {
   name: string;
@@ -62,6 +63,7 @@ export default function Footer({
             <p className="text-xs text-gray-500 mt-4">
               &copy; {new Date().getFullYear()} {name}. All rights reserved.
             </p>
+            <CookieSettingsButton />
           </div>
 
           {/* Navigation */}

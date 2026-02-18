@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
 import { JetBrains_Mono } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import StoryblokProvider from "@/components/storyblok/StoryblokProvider";
 import BackgroundEffects from "@/components/layout/BackgroundEffects";
+import CookieBanner from "@/components/cookie/CookieBanner";
+import TrackingScripts from "@/components/cookie/TrackingScripts";
 import { getProfileData } from "@/lib/get-profile-data";
 
 const jetbrainsMono = JetBrains_Mono({
@@ -34,6 +37,9 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={`${jetbrainsMono.variable} font-mono antialiased`}>
+        <Script id="google-consent-default" strategy="beforeInteractive">
+          {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('consent','default',{analytics_storage:'denied',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',wait_for_update:500});`}
+        </Script>
         <BackgroundEffects />
         <StoryblokProvider>
           <Navbar />
@@ -45,6 +51,8 @@ export default async function RootLayout({
             social={data.social}
           />
         </StoryblokProvider>
+        <TrackingScripts />
+        <CookieBanner />
       </body>
     </html>
   );
