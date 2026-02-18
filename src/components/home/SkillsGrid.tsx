@@ -1,4 +1,5 @@
 import GlassCard from "@/components/ui/GlassCard";
+import TerminalHeading from "@/components/effects/TerminalReveal";
 import { getTechIcon } from "@/lib/tech-icons";
 
 interface SkillsGridProps {
@@ -8,9 +9,11 @@ interface SkillsGridProps {
 export default function SkillsGrid({ skills }: SkillsGridProps) {
   return (
     <section className="max-w-6xl mx-auto px-4 sm:px-6 py-20">
-      <h2 className="text-3xl sm:text-4xl font-bold mb-8">
-        <span className="text-gradient">The Toolkit</span>
-      </h2>
+      <TerminalHeading
+        text="The Toolkit"
+        highlight="The Toolkit"
+        className="text-3xl sm:text-4xl font-bold mb-8"
+      />
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
         {skills.map((skill) => {
           const Icon = getTechIcon(skill);

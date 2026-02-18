@@ -1,3 +1,5 @@
+import TerminalHeading from "@/components/effects/TerminalReveal";
+
 interface Client {
   name: string;
   logo: { url: string; alt: string };
@@ -22,9 +24,11 @@ export default function ClientsSection({ clients }: ClientsSectionProps) {
 
   return (
     <section className="max-w-6xl mx-auto px-4 sm:px-6 py-20">
-      <h2 className="text-3xl sm:text-4xl font-bold mb-10">
-        Proven in <span className="text-gradient">High-Stakes Operations</span>
-      </h2>
+      <TerminalHeading
+        text="Proven in High-Stakes Operations"
+        highlight="High-Stakes Operations"
+        className="text-3xl sm:text-4xl font-bold mb-10"
+      />
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-8 items-center">
         {displayClients.map((client) => {
           const content = client.logo.url ? (

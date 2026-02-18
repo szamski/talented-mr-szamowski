@@ -35,7 +35,7 @@ test.describe("Home Page", () => {
   });
 
   test("about section is visible", async ({ page }) => {
-    // About section heading should always be present
+    // Heading uses terminal typing animation — wait for it to complete
     await expect(page.getByRole("heading", { name: /adaptability|about/i })).toBeVisible();
   });
 

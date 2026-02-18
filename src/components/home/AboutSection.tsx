@@ -2,6 +2,7 @@ import Image from "next/image";
 import { render } from "storyblok-rich-text-react-renderer";
 import GlassCard from "@/components/ui/GlassCard";
 import Tag from "@/components/ui/Tag";
+import TerminalHeading from "@/components/effects/TerminalReveal";
 
 interface AboutSectionProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -19,9 +20,11 @@ export default function AboutSection({
 }: AboutSectionProps) {
   return (
     <section className="max-w-6xl mx-auto px-4 sm:px-6 py-20">
-      <h2 className="text-3xl sm:text-4xl font-bold mb-8">
-        The Art of <span className="text-gradient">Adaptability</span>
-      </h2>
+      <TerminalHeading
+        text="The Art of Adaptability"
+        highlight="Adaptability"
+        className="text-3xl sm:text-4xl font-bold mb-8"
+      />
       <GlassCard className="p-6 sm:p-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
           {/* Photo */}

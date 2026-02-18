@@ -1,4 +1,5 @@
 import GlassCard from "@/components/ui/GlassCard";
+import TerminalHeading from "@/components/effects/TerminalReveal";
 
 interface Experience {
   title: string;
@@ -17,9 +18,11 @@ export default function ExperienceTimeline({
 }: ExperienceTimelineProps) {
   return (
     <section id="experience" className="max-w-6xl mx-auto px-4 sm:px-6 py-20">
-      <h2 className="text-3xl sm:text-4xl font-bold mb-12">
-        <span className="text-gradient">A History of Impact</span>
-      </h2>
+      <TerminalHeading
+        text="A History of Impact"
+        highlight="A History of Impact"
+        className="text-3xl sm:text-4xl font-bold mb-12"
+      />
 
       <div className="relative">
         {/* Timeline line */}
