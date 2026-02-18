@@ -1,8 +1,13 @@
+import { unstable_cache } from "next/cache";
+
 const STORYBLOK_CDN = "https://api.storyblok.com/v2";
 const STORYBLOK_MAPI = "https://mapi.storyblok.com/v1";
 const SPACE_ID = "290596128883130";
 
-export async function storyblokFetch(
+// Cache TTL in seconds — Storyblok webhook at /api/revalidate clears this on content change
+const CACHE_TTL = 60;
+
+async function _storyblokFetch(
   path: string,
   params: Record<string, string | number> = {}
 ) {
@@ -19,19 +24,30 @@ export async function storyblokFetch(
   const searchParams = new URLSearchParams({
     token: cdnToken,
     version: "draft",
-    cv: String(Date.now()),
     ...Object.fromEntries(
       Object.entries(params).map(([k, v]) => [k, String(v)])
     ),
   });
 
   const url = `${STORYBLOK_CDN}/${path}?${searchParams}`;
-  const response = await fetch(url, { redirect: "follow", cache: "no-store" });
+  const response = await fetch(url, {
+    redirect: "follow",
+    next: { revalidate: CACHE_TTL, tags: ["storyblok"] },
+  });
   if (!response.ok) {
     throw new Error(`Storyblok CDN error: ${response.status}`);
   }
   return response.json();
 }
+
+// Wrap with unstable_cache so responses are shared across concurrent requests
+// and cached on the server for CACHE_TTL seconds. The /api/revalidate webhook
+// invalidates the "storyblok" tag on every CMS publish event.
+export const storyblokFetch = unstable_cache(
+  _storyblokFetch,
+  ["storyblok-fetch"],
+  { revalidate: CACHE_TTL, tags: ["storyblok"] }
+);
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function mapiFetch(url: string, token: string, retries = 3): Promise<any> {
@@ -79,11 +95,15 @@ async function mapiQuery(
     const listData = await mapiFetch(`${base}/stories?${mapiParams}`, token);
     const stories = listData.stories || [];
 
-    // Fetch full content for each story (sequential to avoid rate limits)
+    // Fetch full content in parallel batches of 5 to respect rate limits
     const fullStories = [];
-    for (const s of stories as { id: number }[]) {
-      const detail = await mapiFetch(`${base}/stories/${s.id}`, token);
-      fullStories.push(detail.story);
+    const batchSize = 5;
+    for (let i = 0; i < (stories as { id: number }[]).length; i += batchSize) {
+      const batch = (stories as { id: number }[]).slice(i, i + batchSize);
+      const results = await Promise.all(
+        batch.map((s) => mapiFetch(`${base}/stories/${s.id}`, token).then((d) => d.story))
+      );
+      fullStories.push(...results);
     }
 
     // Filter by component type if content_type was specified

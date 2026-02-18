@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { storyblokFetch } from "./storyblok-fetch";
 import cvFallback from "../../maciek_szamowski_cv.json";
 
@@ -68,7 +69,9 @@ function parseComma(text: string): string[] {
     .filter(Boolean);
 }
 
-export async function getProfileData(): Promise<ProfileData> {
+// cache() deduplicates calls within a single React render tree.
+// Layout + page both call getProfileData() — without this, Storyblok gets hit twice per request.
+export const getProfileData = cache(async function getProfileData(): Promise<ProfileData> {
   try {
     // Find profile by content_type (resilient to slug/folder changes)
     const data = await storyblokFetch("cdn/stories", {
@@ -236,4 +239,4 @@ export async function getProfileData(): Promise<ProfileData> {
       },
     };
   }
-}
+});

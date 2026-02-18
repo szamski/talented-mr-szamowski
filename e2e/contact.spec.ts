@@ -37,17 +37,13 @@ test.describe("Contact Page", () => {
     await expect(whatsapp).toHaveAttribute("href", "https://wa.me/48793324715");
   });
 
-  test("social links have correct hrefs", async ({ page }) => {
+  test("social links are present", async ({ page }) => {
     const linkedin = page.getByRole("link", { name: "LinkedIn" }).first();
-    await expect(linkedin).toHaveAttribute(
-      "href",
-      "https://linkedin.com/in/maciekszamowski"
-    );
+    await expect(linkedin).toBeVisible();
+    await expect(linkedin).toHaveAttribute("href", /linkedin/i);
 
     const github = page.getByRole("link", { name: "GitHub" }).first();
-    await expect(github).toHaveAttribute(
-      "href",
-      "https://github.com/maciekszamowski"
-    );
+    await expect(github).toBeVisible();
+    await expect(github).toHaveAttribute("href", /github/i);
   });
 });

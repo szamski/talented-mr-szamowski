@@ -184,3 +184,22 @@
     transform: translateY(0);
   }
 }
+
+/* ── Skeleton / shimmer loading states ── */
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(13, 223, 114, 0.04) 25%,
+    rgba(13, 223, 114, 0.10) 50%,
+    rgba(13, 223, 114, 0.04) 75%
+  );
+  background-size: 200% auto;
+  animation: shimmer 1.6s linear infinite;
+  border-radius: 0.5rem;
+}
