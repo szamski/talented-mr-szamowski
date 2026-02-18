@@ -5,7 +5,7 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import StoryblokProvider from "@/components/storyblok/StoryblokProvider";
 import BackgroundEffects from "@/components/layout/BackgroundEffects";
-import CursorWarp from "@/components/effects/CursorWarp";
+import TerminalScroll from "@/components/effects/TerminalScroll";
 import { getProfileData } from "@/lib/get-profile-data";
 
 const jetbrainsMono = JetBrains_Mono({
@@ -36,7 +36,7 @@ export default async function RootLayout({
     <html lang="en">
       <body className={`${jetbrainsMono.variable} font-mono antialiased`}>
         <BackgroundEffects />
-        <CursorWarp />
+        <TerminalScroll />
         <StoryblokProvider>
           <Navbar />
           <main className="min-h-screen pt-16">{children}</main>

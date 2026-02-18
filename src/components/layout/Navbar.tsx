@@ -1,8 +1,9 @@
 "use client";
 
-import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 import { useState } from "react";
+import NavbarLogo from "./NavbarLogo";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -18,17 +19,7 @@ export default function Navbar() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 border-0 border-b border-brand/10 bg-[rgba(5,10,8,0.85)] backdrop-blur-xl">
       <nav className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-        <Link
-          href="/"
-          className="hover:opacity-80 transition-opacity"
-        >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/images/logo_header.svg"
-            alt="szamowski.dev"
-            className="h-8 w-auto"
-          />
-        </Link>
+        <NavbarLogo />
 
         {/* Desktop nav */}
         <ul className="hidden md:flex items-center gap-8">

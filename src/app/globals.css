@@ -185,6 +185,19 @@
   }
 }
 
+/* ── Client logos — monochrome brand palette ── */
+
+.client-logo {
+  filter: grayscale(1) brightness(0.4);
+  opacity: 0.5;
+  transition: all 0.5s ease;
+}
+
+.group:hover .client-logo {
+  filter: grayscale(0) brightness(1) sepia(1) hue-rotate(100deg) saturate(3);
+  opacity: 0.9;
+}
+
 /* ── Skeleton / shimmer loading states ── */
 
 @keyframes shimmer {

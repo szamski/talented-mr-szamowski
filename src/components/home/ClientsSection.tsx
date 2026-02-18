@@ -22,23 +22,26 @@ export default function ClientsSection({ clients }: ClientsSectionProps) {
 
   return (
     <section className="max-w-6xl mx-auto px-4 sm:px-6 py-20">
-      <h2 className="text-3xl sm:text-4xl font-bold mb-8">
+      <h2 className="text-3xl sm:text-4xl font-bold mb-10">
         Proven in <span className="text-gradient">High-Stakes Operations</span>
       </h2>
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-6 items-center">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-8 items-center">
         {displayClients.map((client) => {
           const content = client.logo.url ? (
             /* eslint-disable-next-line @next/next/no-img-element */
             <img
               src={client.logo.url}
               alt={client.logo.alt}
-              className="h-10 w-auto max-w-full brightness-0 invert opacity-40 group-hover:opacity-100 transition-opacity duration-300"
+              className="h-10 w-auto max-w-full client-logo"
             />
           ) : (
-            <span className="text-sm font-semibold text-gray-500 group-hover:text-brand transition-colors duration-300 tracking-wide">
+            <span className="text-sm font-semibold text-gray-600 group-hover:text-brand transition-colors duration-500 tracking-wide uppercase">
               {client.name}
             </span>
           );
+
+          const className =
+            "group flex items-center justify-center h-16 transition-all duration-500";
 
           if (client.url) {
             return (
@@ -47,7 +50,7 @@ export default function ClientsSection({ clients }: ClientsSectionProps) {
                 href={client.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex items-center justify-center h-16 rounded-xl border border-white/5 hover:border-brand/20 transition-all duration-300"
+                className={className}
               >
                 {content}
               </a>
@@ -55,10 +58,7 @@ export default function ClientsSection({ clients }: ClientsSectionProps) {
           }
 
           return (
-            <div
-              key={client.name}
-              className="group flex items-center justify-center h-16 rounded-xl border border-white/5 hover:border-brand/20 transition-all duration-300"
-            >
+            <div key={client.name} className={className}>
               {content}
             </div>
           );
