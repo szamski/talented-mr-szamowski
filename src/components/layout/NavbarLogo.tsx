@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState, useRef } from "react";
 
-const PROJECT_START = new Date("2025-12-03");
+const PROJECT_START = new Date("2026-02-17");
 
 function getWorkStats() {
   const now = new Date();
