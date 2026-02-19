@@ -54,16 +54,16 @@ export default function Footer({
         <div className="grid grid-cols-2 md:grid-cols-3 gap-8">
           {/* Brand */}
           <div className="col-span-2 md:col-span-1">
-            <h3 className="text-lg font-bold text-brand mb-2">{name}</h3>
+            <h3 className="text-lg font-bold text-brand mb-2">NA SERIO Maciej Szamowski</h3>
             <p className="text-gray-400 text-sm">
               {tagline}
               <br />
               {description}
             </p>
             <p className="text-xs text-gray-500 mt-4">
-              &copy; {new Date().getFullYear()} {name}. All rights reserved.
+              &copy; {new Date().getFullYear()}. All rights reserved. <CookieSettingsButton />
             </p>
-            <CookieSettingsButton />
+        
           </div>
 
           {/* Navigation */}

@@ -60,9 +60,19 @@ import {
   SiCloudflare,
   SiRailway,
   SiSteam,
+  SiPandas,
+  SiGooglebigquery,
+  SiRender,
+  SiOculus,
+  SiUnity,
+  SiMdx,
 } from "react-icons/si";
 import {
   TbBrandMonday,
+  TbBadge4K,
+  TbDeviceMobile,
+  TbBrandDiscordFilled,
+  TbBrowser,
 } from "react-icons/tb";
 import {
   HiOutlineChartBar,
@@ -88,6 +98,11 @@ import {
 
 const iconMap: Record<string, IconType> = {
   // Tech stack
+  "unity engine": SiUnity,
+  "oculus mobile sdk": SiOculus,
+  "render": SiRender,
+  "google bigquery": SiGooglebigquery,
+  "pandas": SiPandas,
   "python": SiPython,
   "next.js": SiNextdotjs,
   "nextjs": SiNextdotjs,
@@ -125,6 +140,9 @@ const iconMap: Record<string, IconType> = {
   "aws": SiAmazonwebservices,
   "amazon web services": SiAmazonwebservices,
   "stripe": SiStripe,
+  "discord.js": TbBrandDiscordFilled,
+  "mdx": SiMdx,
+  "playwright": TbBrowser,
 
   // CMS & website builders
   "storyblok": SiStoryblok,
@@ -161,6 +179,8 @@ const iconMap: Record<string, IconType> = {
   "clickup": SiClickup,
   "trello": SiTrello,
   "monday.com": TbBrandMonday,
+  "video production": TbBadge4K,
+  "galaxy ecosystem": TbDeviceMobile,
 
   // Marketing & analytics
   "google analytics": SiGoogleanalytics,
