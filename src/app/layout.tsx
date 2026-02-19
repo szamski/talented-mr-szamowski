@@ -9,6 +9,7 @@ import BackgroundEffects from "@/components/layout/BackgroundEffects";
 import CookieBanner from "@/components/cookie/CookieBanner";
 import TrackingScripts from "@/components/cookie/TrackingScripts";
 import { getProfileData } from "@/lib/get-profile-data";
+import { Analytics } from "@vercel/analytics/next";
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
@@ -55,6 +56,7 @@ export default async function RootLayout({
         </StoryblokProvider>
         <TrackingScripts />
         <CookieBanner />
+        <Analytics />
       </body>
     </html>
   );
