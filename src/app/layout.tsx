@@ -42,14 +42,16 @@ export default async function RootLayout({
         </Script>
         <BackgroundEffects />
         <StoryblokProvider>
+          <div className="flex min-h-screen flex-col">
           <Navbar />
-          <main className="min-h-screen pt-16">{children}</main>
+          <main className="flex-1 pt-16">{children}</main>
           <Footer
             name={data.personal.name}
             tagline={data.pages.footer_tagline}
             description={data.pages.footer_description}
             social={data.social}
           />
+          </div>
         </StoryblokProvider>
         <TrackingScripts />
         <CookieBanner />

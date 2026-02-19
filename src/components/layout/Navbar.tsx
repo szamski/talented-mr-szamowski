@@ -17,7 +17,7 @@ export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 border-0 border-b border-brand/10 bg-[rgba(5,10,8,0.85)] backdrop-blur-xl">
+    <header className={`fixed top-0 left-0 right-0 z-50 border-0 border-b border-brand/10 bg-[rgba(5,10,8,0.85)] backdrop-blur-xl ${mobileMenuOpen ? "rounded-b-2xl overflow-hidden" : ""}`}>
       <nav className="max-w-6xl 2xl:max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
         <NavbarLogo />
 
@@ -72,7 +72,7 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden glass border-0 border-t border-brand/10">
+        <div className="md:hidden border-0 border-t border-brand/10 bg-[rgba(13,223,114,0.04)] backdrop-blur-xl">
           <ul className="px-4 py-4 space-y-3">
             {navLinks.map((link) => (
               <li key={link.href}>

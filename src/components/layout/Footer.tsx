@@ -77,7 +77,9 @@ export default function Footer({
         <div className="grid grid-cols-2 md:grid-cols-3 gap-8">
           {/* Brand */}
           <div className="col-span-2 md:col-span-1">
-            <h3 className="text-lg font-bold text-brand mb-2">NA SERIO Maciej Szamowski</h3>
+            <h3 className="text-lg font-bold text-brand mb-2">Designed & Developed 
+              <br />
+              by NA SERIO Maciej Szamowski</h3>
             <p className="text-gray-400 text-sm">
              {POLAND_ICON.map(({ key, label, Icon }) => (
               <span key={key} className="inline-flex items-center gap-1">
@@ -85,6 +87,7 @@ export default function Footer({
                 <Icon className="w-4 h-4" />
               </span>
               ))}
+              
               <br />
               {description}
             </p>

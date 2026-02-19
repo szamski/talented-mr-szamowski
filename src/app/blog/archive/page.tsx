@@ -46,7 +46,7 @@ export default async function ArchivePage() {
   const months = Object.keys(grouped).sort().reverse();
 
   return (
-    <section className="max-w-4xl 2xl:max-w-5xl mx-auto px-4 sm:px-6 py-20">
+    <section className="max-w-6xl 2xl:max-w-7xl mx-auto px-4 sm:px-6 py-20">
       <h1 className="text-4xl sm:text-5xl font-bold mb-4">
         <span className="text-gradient">Archive</span>
       </h1>

@@ -16,7 +16,7 @@ export default async function ContactPage() {
   const data = await getProfileData();
 
   return (
-    <section className="max-w-2xl 2xl:max-w-3xl mx-auto px-4 sm:px-6 py-20">
+    <section className="max-w-6xl 2xl:max-w-7xl mx-auto px-4 sm:px-6 py-20">
       <h1 className="text-4xl sm:text-5xl font-bold mb-4">
         <span className="text-gradient">Get in Touch</span>
       </h1>
@@ -28,9 +28,8 @@ export default async function ContactPage() {
         <ContactForm />
       </GlassCard>
 
-      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-        <WhatsAppButton href={data.social.whatsapp} />
-        <SocialLinks linkedin={data.social.linkedin} github={data.social.github} />
+      <div className="flex flex-row items-center gap-4">
+        <WhatsAppButton href={data.social.whatsapp} /> <SocialLinks linkedin={data.social.linkedin} github={data.social.github} />
       </div>
     </section>
   );
