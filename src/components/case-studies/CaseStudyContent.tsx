@@ -26,7 +26,7 @@ export default function CaseStudyContent({ story }: CaseStudyContentProps) {
             src={content.thumbnail.filename}
             alt={content.thumbnail.alt || content.title}
             fill
-            className="object-cover"
+            className="object-cover object-top"
             priority
           />
           <div className="absolute inset-0 bg-linear-to-t from-black/40 to-transparent" />

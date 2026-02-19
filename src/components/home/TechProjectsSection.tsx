@@ -36,7 +36,7 @@ export default function TechProjectsSection({
                     src={project.thumbnail.url}
                     alt={project.thumbnail.alt}
                     fill
-                    className="object-cover"
+                    className="object-cover object-top"
                   />
                   <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent" />
                 </div>

@@ -36,10 +36,33 @@ function WhatsAppIcon({ className }: { className?: string }) {
   );
 }
 
+function PolandIcon({ className }: { className?: string}) {
+  return (
+    <svg className={className} viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="polandGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+          {/* Biały na górze (50%) */}
+          <stop offset="50%" stopColor="white" />
+          {/* Czerwony na dole (50%) */}
+          <stop offset="50%" stopColor="#DC143C" />
+        </linearGradient>
+      </defs>
+      <path 
+        d="M50 90 C 10 60, 0 35, 25 15 C 40 5, 50 25, 50 25 C 50 25, 60 5, 75 15 C 100 35, 90 60, 50 90 Z" 
+        fill="url(#polandGradient)" 
+      />
+      </svg>
+  );
+}
+
 const SOCIAL_LINKS = [
   { key: "linkedin", label: "LinkedIn", Icon: LinkedInIcon },
   { key: "github", label: "GitHub", Icon: GitHubIcon },
   { key: "whatsapp", label: "WhatsApp", Icon: WhatsAppIcon },
+] as const;
+
+const POLAND_ICON = [
+  { key: "poland", label:"From Poland with ", Icon: PolandIcon },
 ] as const;
 
 export default function Footer({
@@ -56,7 +79,12 @@ export default function Footer({
           <div className="col-span-2 md:col-span-1">
             <h3 className="text-lg font-bold text-brand mb-2">NA SERIO Maciej Szamowski</h3>
             <p className="text-gray-400 text-sm">
-              {tagline}
+             {POLAND_ICON.map(({ key, label, Icon }) => (
+              <span key={key} className="inline-flex items-center gap-1">
+                {label}
+                <Icon className="w-4 h-4" />
+              </span>
+              ))}
               <br />
               {description}
             </p>

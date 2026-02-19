@@ -34,7 +34,7 @@ export default function AboutSection({
                 src={portrait.url}
                 alt={portrait.alt}
                 fill
-                className="object-cover object-top"
+                className="object-cover object-[50%_100%] md:object-[25%_55%] sm:object-[25%_50%]"
               />
               <div className="absolute inset-0 bg-linear-to-t from-black/40 to-transparent" />
             </div>
