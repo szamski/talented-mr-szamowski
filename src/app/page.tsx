@@ -24,6 +24,7 @@ export default async function HomePage() {
         targetRoles={data.target_roles}
         portrait={data.images.portrait}
         gallery={data.images.gallery}
+        skills={data.skills}
       />
       <ExperienceTimeline experience={data.experience} />
       <SkillsGrid skills={data.skills} />
