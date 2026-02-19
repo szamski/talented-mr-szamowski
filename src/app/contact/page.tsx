@@ -16,7 +16,7 @@ export default async function ContactPage() {
   const data = await getProfileData();
 
   return (
-    <section className="max-w-2xl mx-auto px-4 sm:px-6 py-20">
+    <section className="max-w-2xl 2xl:max-w-3xl mx-auto px-4 sm:px-6 py-20">
       <h1 className="text-4xl sm:text-5xl font-bold mb-4">
         <span className="text-gradient">Get in Touch</span>
       </h1>

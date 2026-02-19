@@ -10,7 +10,7 @@ interface HeroSectionProps {
 
 export default function HeroSection({ name, headline, tagline, headshot }: HeroSectionProps) {
   return (
-    <section className="relative flex items-start justify-center pb-16 sm:pb-0 sm:min-h-[min(calc(100svh-4rem),56rem)] pt-8 px-4 overflow-hidden">
+    <section className="relative flex items-center justify-center pb-16 sm:pb-0 sm:min-h-[min(calc(100svh-4rem),48rem)] pt-8 px-4 overflow-hidden">
       {/* Background gradient orbs */}
       <div className="absolute top-1/4 -left-32 w-96 h-96 bg-brand/10 rounded-full blur-[128px]" />
       <div className="absolute bottom-1/4 -right-32 w-96 h-96 bg-dark-green/30 rounded-full blur-[128px]" />

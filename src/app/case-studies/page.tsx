@@ -39,7 +39,7 @@ export default async function CaseStudiesPage() {
   const stories: CaseStudyStory[] = storiesResult.stories ?? [];
 
   return (
-    <section className="max-w-4xl mx-auto px-4 sm:px-6 py-20">
+    <section className="max-w-4xl 2xl:max-w-5xl mx-auto px-4 sm:px-6 py-20">
       <h1 className="text-4xl sm:text-5xl font-bold mb-4">
         Selected <span className="text-gradient">Works</span>
       </h1>

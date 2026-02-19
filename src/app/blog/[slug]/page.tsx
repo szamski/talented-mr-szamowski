@@ -13,7 +13,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
 
   try {
-    const data = await storyblokFetch(`cdn/stories/articles/${slug}`);
+    const data = await storyblokFetch(`cdn/stories/blog/${slug}`);
     return {
       title: data.story.content.title,
       description: data.story.content.excerpt,
@@ -28,7 +28,7 @@ export default async function BlogPostPage({ params }: Props) {
 
   let story;
   try {
-    const data = await storyblokFetch(`cdn/stories/articles/${slug}`);
+    const data = await storyblokFetch(`cdn/stories/blog/${slug}`);
     story = data.story;
   } catch {
     notFound();
@@ -42,7 +42,7 @@ export default async function BlogPostPage({ params }: Props) {
     : [];
 
   return (
-    <article className="max-w-3xl mx-auto px-4 sm:px-6 py-20">
+    <article className="max-w-3xl 2xl:max-w-4xl mx-auto px-4 sm:px-6 py-20">
       <BlogPostContent story={story} />
       <ShareLinks url={`/blog/${slug}`} title={story.content.title} />
       <RelatedPosts tags={tags} currentSlug={slug} />

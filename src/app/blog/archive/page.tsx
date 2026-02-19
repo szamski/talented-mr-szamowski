@@ -22,7 +22,7 @@ export default async function ArchivePage() {
 
   try {
     const data = await storyblokFetch("cdn/stories", {
-      starts_with: "articles/",
+      starts_with: "blog/",
       content_type: "article",
       per_page: 100,
       sort_by: "content.published_at:desc",
@@ -46,7 +46,7 @@ export default async function ArchivePage() {
   const months = Object.keys(grouped).sort().reverse();
 
   return (
-    <section className="max-w-4xl mx-auto px-4 sm:px-6 py-20">
+    <section className="max-w-4xl 2xl:max-w-5xl mx-auto px-4 sm:px-6 py-20">
       <h1 className="text-4xl sm:text-5xl font-bold mb-4">
         <span className="text-gradient">Archive</span>
       </h1>

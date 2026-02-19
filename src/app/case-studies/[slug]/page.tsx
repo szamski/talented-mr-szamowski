@@ -36,7 +36,7 @@ export default async function CaseStudyPage({ params }: Props) {
   }
 
   return (
-    <article className="max-w-3xl mx-auto px-4 sm:px-6 py-20">
+    <article className="max-w-3xl 2xl:max-w-4xl mx-auto px-4 sm:px-6 py-20">
       <Link
         href="/case-studies"
         className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-brand transition-colors mb-8"

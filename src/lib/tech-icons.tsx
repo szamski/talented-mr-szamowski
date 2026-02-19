@@ -94,6 +94,9 @@ import {
   HiOutlineCodeBracket,
   HiOutlineServerStack,
   HiOutlineCommandLine,
+  HiUserGroup,
+  HiStar,
+  HiAcademicCap,
 } from "react-icons/hi2";
 
 const iconMap: Record<string, IconType> = {
@@ -217,6 +220,10 @@ const iconMap: Record<string, IconType> = {
   "crm": HiOutlineEnvelope,
   "martech": HiOutlineWrenchScrewdriver,
   "go-to-market strategy": HiOutlineRocketLaunch,
+  "cmo": HiUserGroup,
+  "marketing director": HiStar,
+  "strategy consultant": HiAcademicCap,
+  "fullstack development": HiOutlineCodeBracket,
 
   // Dev skills
   "devops": HiOutlineServerStack,

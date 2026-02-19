@@ -23,7 +23,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
   const tag = params.tag;
 
   const fetchParams: Record<string, string | number> = {
-    starts_with: "articles/",
+    starts_with: "blog/",
     content_type: "article",
     per_page: perPage,
     page,
@@ -45,7 +45,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
   const totalPages = Math.ceil(total / perPage);
 
   return (
-    <section className="max-w-4xl mx-auto px-4 sm:px-6 py-20">
+    <section className="max-w-4xl 2xl:max-w-5xl mx-auto px-4 sm:px-6 py-20">
       <h1 className="text-4xl sm:text-5xl font-bold mb-4">
         <span className="text-gradient">Blog</span>
       </h1>

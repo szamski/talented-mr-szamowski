@@ -3,6 +3,7 @@ import { render } from "storyblok-rich-text-react-renderer";
 import GlassCard from "@/components/ui/GlassCard";
 import Tag from "@/components/ui/Tag";
 import TerminalHeading from "@/components/effects/TerminalReveal";
+import { getTechIcon } from "@/lib/tech-icons";
 
 interface AboutSectionProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -10,6 +11,7 @@ interface AboutSectionProps {
   targetRoles: string[];
   portrait: { url: string; alt: string };
   gallery: { image: { url: string; alt: string }; caption: string; position: string }[];
+  skills: string[];
 }
 
 export default function AboutSection({
@@ -19,7 +21,7 @@ export default function AboutSection({
   gallery,
 }: AboutSectionProps) {
   return (
-    <section className="max-w-6xl 2xl:max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-20">
+    <section className="max-w-6xl 2xl:max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
       <TerminalHeading
         text="The Art of Adaptability"
         highlight="Adaptability"
@@ -47,12 +49,13 @@ export default function AboutSection({
             </div>
             <div className="flex flex-wrap gap-2">
               {targetRoles.map((role) => (
-                <Tag key={role}>{role}</Tag>
+                <Tag key={role} icon>{role}</Tag>
               ))}
             </div>
           </div>
         </div>
       </GlassCard>
+
 
       {/* Photo gallery strip */}
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-8">

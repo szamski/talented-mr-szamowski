@@ -15,10 +15,10 @@ export default async function RelatedPosts({
 
   try {
     const data = await storyblokFetch("cdn/stories", {
-      starts_with: "articles/",
+      starts_with: "blog/",
       content_type: "article",
       per_page: 3,
-      excluding_slugs: `articles/${currentSlug}`,
+      excluding_slugs: `blog/${currentSlug}`,
       "filter_query[tags][any_in_array]": tags.join(","),
     });
 

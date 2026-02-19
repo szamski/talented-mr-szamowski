@@ -43,7 +43,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   let blogEntries: MetadataRoute.Sitemap = [];
   try {
     const result = await storyblokFetch("cdn/stories", {
-      starts_with: "articles/",
+      starts_with: "blog/",
       content_type: "article",
       per_page: 100,
     });
