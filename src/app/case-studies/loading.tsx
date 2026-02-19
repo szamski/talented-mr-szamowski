@@ -1,6 +1,6 @@
 export default function CaseStudiesLoading() {
   return (
-    <section className="max-w-4xl mx-auto px-4 sm:px-6 py-20 animate-fade-in">
+    <section className="max-w-6xl 2xl:max-w-7xl mx-auto px-4 sm:px-6 py-20 animate-fade-in">
       {/* Header */}
       <div className="skeleton h-12 w-56 mb-4" />
       <div className="skeleton h-4 w-96 mb-10" />

@@ -4,7 +4,7 @@ export default function HomeLoading() {
   return (
     <div className="animate-fade-in">
       {/* Hero skeleton */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 py-20 md:py-32">
+      <section className="max-w-6xl 2xl:max-w-7xl mx-auto px-4 sm:px-6 py-20 md:py-32">
         <div className="flex flex-col md:flex-row items-center gap-12">
           <div className="flex-1 space-y-6">
             <div className="skeleton h-4 w-32" />
@@ -21,7 +21,7 @@ export default function HomeLoading() {
       </section>
 
       {/* About skeleton */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 py-20">
+      <section className="max-w-6xl 2xl:max-w-7xl mx-auto px-4 sm:px-6 py-20">
         <div className="skeleton h-8 w-48 mb-8" />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="space-y-3">
@@ -36,7 +36,7 @@ export default function HomeLoading() {
       </section>
 
       {/* Experience skeleton */}
-      <section className="max-w-4xl mx-auto px-4 sm:px-6 py-20">
+      <section className="max-w-6xl 2xl:max-w-7xl mx-auto px-4 sm:px-6 py-20">
         <div className="skeleton h-8 w-52 mb-10" />
         {[1, 2, 3].map((i) => (
           <div key={i} className="mb-8 pl-6 border-l border-brand/10">
@@ -52,7 +52,7 @@ export default function HomeLoading() {
       </section>
 
       {/* Skills skeleton */}
-      <section className="max-w-4xl mx-auto px-4 sm:px-6 py-20">
+      <section className="max-w-6xl 2xl:max-w-7xl mx-auto px-4 sm:px-6 py-20">
         <div className="skeleton h-8 w-32 mb-8" />
         <div className="flex flex-wrap gap-3">
           {Array.from({ length: 18 }).map((_, i) => (

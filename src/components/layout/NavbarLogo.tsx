@@ -5,19 +5,30 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState, useRef, useCallback } from "react";
 
 const PROJECT_START = new Date("2026-02-17");
+const PROJECT_END = new Date("2026-02-19");
 
 function getWorkStats() {
-  const now = new Date();
+
+  // Ustawiamy datę końcową na sztywno
+  const endDate = new Date(PROJECT_END);
   let workingDays = 0;
-  const d = new Date(PROJECT_START);
-  while (d <= now) {
+
+const d = new Date(PROJECT_START);
+
+// Pętla wykonuje się do momentu osiągnięcia daty końcowej
+  while (d <= endDate) {
     const day = d.getDay();
-    if (day !== 0 && day !== 6) workingDays++;
+    // Pomijamy soboty (6) i niedziele (0)
+    if (day !== 0 && day !== 6) {
+      workingDays++;
+    }
     d.setDate(d.getDate() + 1);
   }
-  const hours = workingDays * 4;
+  
+  const hours = workingDays * 8;
   return { hours, workingDays };
 }
+const result = getWorkStats();
 
 type SequenceItem = string | (() => string) | { text: string; link: string };
 
