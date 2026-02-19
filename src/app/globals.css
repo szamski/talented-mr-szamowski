@@ -215,7 +215,7 @@
 }
 
 .crt-flicker {
-  animation: crt-flicker 0.15s steps(2, start) infinite;
+  animation: crt-flicker 0.3s steps(2, start) infinite;
 }
 
 /* ── Skeleton / shimmer loading states ── */

@@ -8,7 +8,7 @@ interface SkillsGridProps {
 
 export default function SkillsGrid({ skills }: SkillsGridProps) {
   return (
-    <section className="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-20">
+    <section className="max-w-6xl 2xl:max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-20">
       <TerminalHeading
         text="The Toolkit"
         highlight="The Toolkit"

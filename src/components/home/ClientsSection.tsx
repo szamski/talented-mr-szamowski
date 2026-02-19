@@ -23,7 +23,7 @@ export default function ClientsSection({ clients }: ClientsSectionProps) {
   const displayClients = clients.length > 0 ? clients : PLACEHOLDER_CLIENTS;
 
   return (
-    <section className="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-20">
+    <section className="max-w-6xl 2xl:max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-20">
       <TerminalHeading
         text="Proven in High-Stakes Operations"
         highlight="High-Stakes Operations"

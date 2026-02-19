@@ -22,15 +22,15 @@ function getWorkStats() {
 type SequenceItem = string | (() => string) | { text: string; link: string };
 
 const SEQUENCE: SequenceItem[] = [
-  "Months of work?",
-  "I deliver in days.",
+  "Months of work? ",
+  "I deliver in days. ",
   () => {
     const s = getWorkStats();
-    return `${s.hours}h logged so far.`;
+    return `${s.hours}h logged so far. `;
   },
-  "Strategy to code.",
-  "One person. Full stack.",
-  "Ready to start?",
+  "Strategy to code. ",
+  "One person. Full stack. ",
+  "Ready to start? ",
   { text: "Let's talk ", link: "/contact" },
 ];
 
@@ -41,7 +41,7 @@ const IDLE_PAUSE = 15000;
 
 function getStepText(step: SequenceItem): string {
   if (typeof step === "function") return step();
-  if (typeof step === "object") return step.text + "here.";
+  if (typeof step === "object") return step.text + "here. ";
   return step;
 }
 
@@ -175,7 +175,7 @@ export default function NavbarLogo() {
             >
               here
             </Link>
-            .
+            . 
             <span className="animate-pulse">▋</span>
           </span>
         ) : (
