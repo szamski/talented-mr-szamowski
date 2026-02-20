@@ -18,14 +18,45 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "The Talented Mr. Szamowski",
+    default: "The Talented Mr. Szamowski | Maciej Szamowski",
     template: "%s | The Talented Mr. Szamowski",
   },
   description:
-    "Marketing and business leader with 15+ years of experience. Digital One Man Army.",
+    "Maciej Szamowski — Marketing & Growth Leader with 15+ years scaling brands, teams and revenue across SaaS, gaming and e-commerce. Fullstack developer building with Next.js, Python and automation.",
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_SITE_URL || "https://szamowski.dev"
   ),
+  keywords: [
+    "Maciej Szamowski",
+    "marketing director",
+    "growth leader",
+    "fullstack developer",
+    "digital consultant",
+    "SaaS marketing",
+    "Next.js developer",
+    "Warsaw Poland",
+  ],
+  authors: [{ name: "Maciej Szamowski" }],
+  creator: "Maciej Szamowski",
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://szamowski.dev",
+    siteName: "The Talented Mr. Szamowski",
+    title: "The Talented Mr. Szamowski | Maciej Szamowski",
+    description:
+      "Marketing & Growth Leader with 15+ years scaling brands, teams and revenue. Fullstack developer & digital one-man army.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "The Talented Mr. Szamowski | Maciej Szamowski",
+    description:
+      "Marketing & Growth Leader with 15+ years scaling brands, teams and revenue. Fullstack developer & digital one-man army.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default async function RootLayout({
