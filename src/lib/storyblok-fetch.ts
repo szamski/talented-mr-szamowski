@@ -13,24 +13,24 @@ async function _storyblokFetch(
   params: Record<string, string | number> = {},
   draft = false
 ) {
-  const cdnToken = process.env.STORYBLOK_API_TOKEN;
   const mgmtToken = process.env.STORYBLOK_MANAGEMENT_TOKEN;
+  const cdnToken = process.env.STORYBLOK_API_TOKEN;
 
-  // Try CDN API first (fast, reliable, region-aware)
-  if (cdnToken) {
+  // Try MAPI first (works globally — reliable from US build servers and EU runtime)
+  if (mgmtToken) {
     try {
-      return await cdnQuery(path, params, cdnToken, draft);
+      return await mapiQuery(path, params, mgmtToken);
     } catch (error) {
-      console.warn("[Storyblok] CDN failed, trying MAPI fallback:", error);
+      console.warn("[Storyblok] MAPI failed, trying CDN fallback:", error);
     }
   }
 
-  // Fallback to Management API (works globally, but strict rate limits)
-  if (mgmtToken) {
-    return mapiQuery(path, params, mgmtToken);
+  // Fallback to CDN API (works from EU runtime, may 401 from US build servers)
+  if (cdnToken) {
+    return cdnQuery(path, params, cdnToken, draft);
   }
 
-  throw new Error("Missing both STORYBLOK_API_TOKEN and STORYBLOK_MANAGEMENT_TOKEN");
+  throw new Error("Missing both STORYBLOK_MANAGEMENT_TOKEN and STORYBLOK_API_TOKEN");
 }
 
 async function cdnQuery(
@@ -81,25 +81,39 @@ export function storyblokFetch(
   return draft ? cachedDraft(path, params) : cachedPublished(path, params);
 }
 
+// Simple per-process queue to serialize MAPI requests and avoid rate limit stampedes
+let mapiQueue: Promise<void> = Promise.resolve();
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-async function mapiFetch(url: string, token: string, retries = 3): Promise<any> {
-  for (let attempt = 0; attempt <= retries; attempt++) {
-    const response = await fetch(url, {
-      headers: { Authorization: token },
-      cache: "no-store",
-    });
-    if (response.status === 429 && attempt < retries) {
-      const wait = Math.min(1000 * 2 ** attempt, 10000);
-      console.warn(`[Storyblok] MAPI 429, retry ${attempt + 1} in ${wait}ms`);
-      await new Promise((r) => setTimeout(r, wait));
-      continue;
+async function mapiFetch(url: string, token: string, retries = 6): Promise<any> {
+  // Wait for previous MAPI request to complete before starting a new one
+  const execute = async () => {
+    for (let attempt = 0; attempt <= retries; attempt++) {
+      const response = await fetch(url, {
+        headers: { Authorization: token },
+        cache: "no-store",
+      });
+      if (response.status === 429 && attempt < retries) {
+        // Exponential backoff with jitter to de-synchronize parallel workers
+        const base = Math.min(2000 * 2 ** attempt, 30000);
+        const jitter = Math.random() * 1000;
+        const wait = base + jitter;
+        console.warn(`[Storyblok] MAPI 429, retry ${attempt + 1}/${retries} in ${Math.round(wait)}ms`);
+        await new Promise((r) => setTimeout(r, wait));
+        continue;
+      }
+      if (!response.ok) {
+        throw new Error(`Storyblok MAPI error: ${response.status}`);
+      }
+      return response.json();
     }
-    if (!response.ok) {
-      throw new Error(`Storyblok MAPI error: ${response.status}`);
-    }
-    return response.json();
-  }
-  throw new Error("Storyblok MAPI: max retries exceeded");
+    throw new Error("Storyblok MAPI: max retries exceeded");
+  };
+
+  // Chain onto the queue so requests execute one at a time
+  const result = mapiQueue.then(execute, execute);
+  mapiQueue = result.then(() => {}, () => {});
+  return result;
 }
 
 async function mapiQuery(
@@ -111,17 +125,13 @@ async function mapiQuery(
 
   // List stories: cdn/stories
   if (path === "cdn/stories") {
-    // MAPI doesn't support content_type filter — we need to fetch stories
-    // and filter by component type in the full content ourselves
     const contentType = params.content_type as string | undefined;
     const mapiParams = new URLSearchParams();
     for (const [k, v] of Object.entries(params)) {
-      // Skip content_type — MAPI doesn't support it properly
       if (k === "content_type") continue;
       mapiParams.set(k, String(v));
     }
 
-    // If content_type is set, fetch more stories so we can filter
     if (contentType) {
       mapiParams.set("per_page", "25");
     }
@@ -129,18 +139,13 @@ async function mapiQuery(
     const listData = await mapiFetch(`${base}/stories?${mapiParams}`, token);
     const stories = listData.stories || [];
 
-    // Fetch full content in parallel batches of 5 to respect rate limits
+    // Fetch full content sequentially to respect rate limits during build
     const fullStories = [];
-    const batchSize = 5;
-    for (let i = 0; i < (stories as { id: number }[]).length; i += batchSize) {
-      const batch = (stories as { id: number }[]).slice(i, i + batchSize);
-      const results = await Promise.all(
-        batch.map((s) => mapiFetch(`${base}/stories/${s.id}`, token).then((d) => d.story))
-      );
-      fullStories.push(...results);
+    for (const s of stories as { id: number }[]) {
+      const detail = await mapiFetch(`${base}/stories/${s.id}`, token);
+      fullStories.push(detail.story);
     }
 
-    // Filter by component type if content_type was specified
     const filtered = contentType
       ? fullStories.filter(
           (s: { content?: { component?: string } }) =>
@@ -148,7 +153,6 @@ async function mapiQuery(
         )
       : fullStories;
 
-    // Apply per_page limit from original params
     const perPage = params.per_page ? Number(params.per_page) : filtered.length;
     const result = filtered.slice(0, perPage);
 

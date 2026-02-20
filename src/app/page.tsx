@@ -6,6 +6,8 @@ import TechProjectsSection from "@/components/home/TechProjectsSection";
 import ClientsSection from "@/components/home/ClientsSection";
 import { getProfileData } from "@/lib/get-profile-data";
 
+export const dynamic = "force-dynamic";
+
 export default async function HomePage() {
   const data = await getProfileData();
 

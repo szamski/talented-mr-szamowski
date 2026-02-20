@@ -4,6 +4,8 @@ import { notFound } from "next/navigation";
 import { storyblokFetch } from "@/lib/storyblok-fetch";
 import CaseStudyContent from "@/components/case-studies/CaseStudyContent";
 
+export const dynamic = "force-dynamic";
+
 interface Props {
   params: Promise<{ slug: string }>;
 }

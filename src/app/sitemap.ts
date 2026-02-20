@@ -1,6 +1,8 @@
 import type { MetadataRoute } from "next";
 import { storyblokFetch } from "@/lib/storyblok-fetch";
 
+export const dynamic = "force-dynamic";
+
 interface StoryEntry {
   slug: string;
   published_at?: string;
