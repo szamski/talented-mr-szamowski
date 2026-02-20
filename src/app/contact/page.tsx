@@ -5,8 +5,6 @@ import WhatsAppButton from "@/components/contact/WhatsAppButton";
 import SocialLinks from "@/components/contact/SocialLinks";
 import { getProfileData } from "@/lib/get-profile-data";
 
-export const dynamic = "force-dynamic";
-
 export const metadata: Metadata = {
   title: "Contact",
   description: "Get in touch with Maciej Szamowski.",

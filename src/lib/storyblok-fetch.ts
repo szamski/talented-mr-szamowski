@@ -4,26 +4,44 @@ const STORYBLOK_CDN = "https://api.storyblok.com/v2";
 const STORYBLOK_MAPI = "https://mapi.storyblok.com/v1";
 const SPACE_ID = "290596128883130";
 
-// Cache TTL in seconds — Storyblok webhook at /api/revalidate clears this on content change
-const CACHE_TTL = 60;
+// Cache TTL in seconds — the /api/revalidate webhook clears this on publish.
+// Set high because webhook-driven invalidation handles freshness.
+const CACHE_TTL = 3600;
 
 async function _storyblokFetch(
   path: string,
-  params: Record<string, string | number> = {}
+  params: Record<string, string | number> = {},
+  draft = false
 ) {
-  const mgmtToken = process.env.STORYBLOK_MANAGEMENT_TOKEN;
   const cdnToken = process.env.STORYBLOK_API_TOKEN;
+  const mgmtToken = process.env.STORYBLOK_MANAGEMENT_TOKEN;
 
-  // Try Management API first (reliable from any region)
+  // Try CDN API first (fast, reliable, region-aware)
+  if (cdnToken) {
+    try {
+      return await cdnQuery(path, params, cdnToken, draft);
+    } catch (error) {
+      console.warn("[Storyblok] CDN failed, trying MAPI fallback:", error);
+    }
+  }
+
+  // Fallback to Management API (works globally, but strict rate limits)
   if (mgmtToken) {
     return mapiQuery(path, params, mgmtToken);
   }
 
-  // Fallback to CDN API (works locally / from EU)
-  if (!cdnToken) throw new Error("Missing STORYBLOK_API_TOKEN");
+  throw new Error("Missing both STORYBLOK_API_TOKEN and STORYBLOK_MANAGEMENT_TOKEN");
+}
+
+async function cdnQuery(
+  path: string,
+  params: Record<string, string | number>,
+  token: string,
+  draft: boolean
+) {
   const searchParams = new URLSearchParams({
-    token: cdnToken,
-    version: "draft",
+    token,
+    version: draft ? "draft" : "published",
     ...Object.fromEntries(
       Object.entries(params).map(([k, v]) => [k, String(v)])
     ),
@@ -43,11 +61,25 @@ async function _storyblokFetch(
 // Wrap with unstable_cache so responses are shared across concurrent requests
 // and cached on the server for CACHE_TTL seconds. The /api/revalidate webhook
 // invalidates the "storyblok" tag on every CMS publish event.
-export const storyblokFetch = unstable_cache(
-  _storyblokFetch,
-  ["storyblok-fetch"],
-  { revalidate: CACHE_TTL, tags: ["storyblok"] }
-);
+function createCachedFetch(draft: boolean) {
+  return unstable_cache(
+    (path: string, params: Record<string, string | number> = {}) =>
+      _storyblokFetch(path, params, draft),
+    ["storyblok-fetch", draft ? "draft" : "published"],
+    { revalidate: CACHE_TTL, tags: ["storyblok"] }
+  );
+}
+
+const cachedPublished = createCachedFetch(false);
+const cachedDraft = createCachedFetch(true);
+
+export function storyblokFetch(
+  path: string,
+  params: Record<string, string | number> = {},
+  draft = false
+) {
+  return draft ? cachedDraft(path, params) : cachedPublished(path, params);
+}
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function mapiFetch(url: string, token: string, retries = 3): Promise<any> {
@@ -57,7 +89,9 @@ async function mapiFetch(url: string, token: string, retries = 3): Promise<any> 
       cache: "no-store",
     });
     if (response.status === 429 && attempt < retries) {
-      await new Promise((r) => setTimeout(r, 500 * (attempt + 1)));
+      const wait = Math.min(1000 * 2 ** attempt, 10000);
+      console.warn(`[Storyblok] MAPI 429, retry ${attempt + 1} in ${wait}ms`);
+      await new Promise((r) => setTimeout(r, wait));
       continue;
     }
     if (!response.ok) {

@@ -6,7 +6,7 @@ test.describe("Home Page", () => {
   });
 
   test("has correct title", async ({ page }) => {
-    await expect(page).toHaveTitle("The Talented Mr. Szamowski");
+    await expect(page).toHaveTitle("The Talented Mr. Szamowski | Maciej Szamowski");
   });
 
   test("hero section displays name and tagline", async ({ page }) => {
@@ -65,7 +65,7 @@ test.describe("Home Page", () => {
     await expect(
       page.getByRole("link", { name: "GitHub" }).first()
     ).toBeVisible();
-    await expect(page.getByText(/© 2026.*Szamowski/i)).toBeVisible();
+    await expect(page.getByText(/© \d{4}\. All rights reserved/i)).toBeVisible();
   });
 });
 

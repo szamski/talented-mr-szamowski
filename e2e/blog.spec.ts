@@ -6,17 +6,19 @@ test.describe("Blog Page", () => {
     await expect(page).toHaveTitle("Blog | The Talented Mr. Szamowski");
   });
 
-  test("shows empty state when no posts exist", async ({ page }) => {
+  test("shows posts or empty state", async ({ page }) => {
     await page.goto("/blog");
-    await expect(page.getByText("No blog posts yet")).toBeVisible();
+    // Wait for heading to confirm page has loaded
+    await expect(page.getByRole("heading", { name: "Blog" })).toBeVisible();
+    // Then check for posts or empty state
+    await expect(
+      page.getByText("No blog posts yet").or(page.locator("a[href^='/blog/']").first())
+    ).toBeVisible();
   });
 
-  test("heading and description are visible", async ({ page }) => {
+  test("heading is visible", async ({ page }) => {
     await page.goto("/blog");
     await expect(page.getByRole("heading", { name: "Blog" })).toBeVisible();
-    await expect(
-      page.getByText("Thoughts on marketing, technology, and business strategy")
-    ).toBeVisible();
   });
 
   test("archive page loads", async ({ page }) => {

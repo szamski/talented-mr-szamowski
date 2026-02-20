@@ -6,8 +6,6 @@ import { getProfileData } from "@/lib/get-profile-data";
 import GlassCard from "@/components/ui/GlassCard";
 import Tag from "@/components/ui/Tag";
 
-export const dynamic = "force-dynamic";
-
 export const metadata: Metadata = {
   title: "Case Studies",
   description:

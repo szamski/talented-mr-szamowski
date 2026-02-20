@@ -1,4 +1,5 @@
 import { cache } from "react";
+import { draftMode } from "next/headers";
 import { storyblokFetch } from "./storyblok-fetch";
 import cvFallback from "../../maciek_szamowski_cv.json";
 
@@ -73,11 +74,14 @@ function parseComma(text: string): string[] {
 // Layout + page both call getProfileData() — without this, Storyblok gets hit twice per request.
 export const getProfileData = cache(async function getProfileData(): Promise<ProfileData> {
   try {
+    const { isEnabled: isDraft } = await draftMode();
+
     // Find profile by content_type (resilient to slug/folder changes)
-    const data = await storyblokFetch("cdn/stories", {
-      content_type: "profile",
-      per_page: 1,
-    });
+    const data = await storyblokFetch(
+      "cdn/stories",
+      { content_type: "profile", per_page: 1 },
+      isDraft
+    );
     if (!data.stories?.length) throw new Error("No profile story found");
     const content = data.stories[0].content;
     console.log("[Storyblok] Profile loaded, name:", content.name);
