@@ -116,6 +116,14 @@ async function mapiFetch(url: string, token: string, retries = 6): Promise<any> 
   return result;
 }
 
+// Map content_type (component name) → Storyblok folder path for server-side filtering.
+// This avoids fetching ALL stories and filtering client-side (was 11 req → now 2-N).
+const CONTENT_TYPE_TO_FOLDER: Record<string, string> = {
+  profile: "",          // root level, use with_slug instead
+  blog_post: "blog/",
+  case_study: "case-studies/",
+};
+
 async function mapiQuery(
   path: string,
   params: Record<string, string | number>,
@@ -126,37 +134,59 @@ async function mapiQuery(
   // List stories: cdn/stories
   if (path === "cdn/stories") {
     const contentType = params.content_type as string | undefined;
-    const mapiParams = new URLSearchParams();
-    for (const [k, v] of Object.entries(params)) {
-      if (k === "content_type") continue;
-      mapiParams.set(k, String(v));
+    const perPage = params.per_page ? Number(params.per_page) : 25;
+
+    // Special case: profile is a single root-level story — 2 requests only
+    if (contentType === "profile") {
+      const listData = await mapiFetch(
+        `${base}/stories?with_slug=profile`,
+        token
+      );
+      if (!listData.stories?.length) {
+        throw new Error("Profile story not found");
+      }
+      const detail = await mapiFetch(
+        `${base}/stories/${listData.stories[0].id}`,
+        token
+      );
+      return { stories: [detail.story], total: 1 };
     }
 
-    if (contentType) {
-      mapiParams.set("per_page", "25");
+    // For known content types, scope to folder with starts_with filter
+    const folder = contentType ? CONTENT_TYPE_TO_FOLDER[contentType] : undefined;
+    const mapiParams = new URLSearchParams();
+    if (folder) {
+      mapiParams.set("starts_with", folder);
+      mapiParams.set("is_startpage", "false");
+    }
+    mapiParams.set("per_page", String(perPage));
+
+    // Copy through other params (sort, page, etc.) but skip content_type/per_page
+    for (const [k, v] of Object.entries(params)) {
+      if (k === "content_type" || k === "per_page") continue;
+      mapiParams.set(k, String(v));
     }
 
     const listData = await mapiFetch(`${base}/stories?${mapiParams}`, token);
     const stories = listData.stories || [];
 
-    // Fetch full content sequentially to respect rate limits during build
+    // MAPI list doesn't include content — fetch each story individually
     const fullStories = [];
     for (const s of stories as { id: number }[]) {
       const detail = await mapiFetch(`${base}/stories/${s.id}`, token);
       fullStories.push(detail.story);
     }
 
-    const filtered = contentType
-      ? fullStories.filter(
-          (s: { content?: { component?: string } }) =>
-            s.content?.component === contentType
-        )
-      : fullStories;
+    // If content_type was given but no folder mapping exists, filter client-side
+    const filtered =
+      contentType && !folder
+        ? fullStories.filter(
+            (s: { content?: { component?: string } }) =>
+              s.content?.component === contentType
+          )
+        : fullStories;
 
-    const perPage = params.per_page ? Number(params.per_page) : filtered.length;
-    const result = filtered.slice(0, perPage);
-
-    return { stories: result, total: filtered.length };
+    return { stories: filtered.slice(0, perPage), total: filtered.length };
   }
 
   // Single story by slug: cdn/stories/{slug}
