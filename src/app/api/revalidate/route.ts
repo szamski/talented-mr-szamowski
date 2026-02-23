@@ -9,7 +9,8 @@ export async function POST(request: NextRequest) {
   }
 
   // Clear the unstable_cache entries tagged "storyblok"
-  revalidateTag("storyblok", "default");
+  // expire: 0 forces immediate invalidation instead of stale-while-revalidate
+  revalidateTag("storyblok", { expire: 0 });
 
   revalidatePath("/", "layout");
   revalidatePath("/blog", "layout");
