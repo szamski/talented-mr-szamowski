@@ -1,0 +1,12 @@
+{
+  "id": "mmnfnvskpzrfy3",
+  "name": "Test Project 1773317852039",
+  "slides": [
+    {
+      "id": "mmnfnvsk2ddrv0",
+      "html": "<div class=\"slide\">\n  <div class=\"orb\" style=\"width:600px;height:600px;background:radial-gradient(circle,rgba(13,223,114,0.15),transparent 70%);top:-15%;left:30%;\"></div>\n  <div class=\"orb\" style=\"width:400px;height:400px;background:radial-gradient(circle,rgba(29,57,43,0.5),transparent 70%);bottom:10%;right:-5%;\"></div>\n  <div class=\"corner c-tl\"></div><div class=\"corner c-br\"></div>\n  <div class=\"z\"><div class=\"label\">Case Study</div>\n    <h1 style=\"margin-bottom:14px;\">Project Title<br><span class=\"accent\">Subtitle Here</span></h1>\n    <p class=\"body-text\" style=\"margin-top:16px;\">A brief description of the project<br>and what it achieves.</p>\n  </div>\n  <div class=\"z\" style=\"flex:1;margin-top:32px;display:flex;gap:16px;\"></div>\n  <div class=\"z\" style=\"display:flex;gap:8px;flex-wrap:wrap;margin-top:24px;\">\n    <span class=\"pill\">Tag 1</span><span class=\"pill\">Tag 2</span><span class=\"pill\">Tag 3</span>\n  </div>\n  <div class=\"sn\">01 / 01</div><div class=\"ub\">szamowski.dev</div>\n</div>"
+    }
+  ],
+  "createdAt": "2026-03-12T12:17:32.084Z",
+  "updatedAt": "2026-03-12T12:17:32.084Z"
+}

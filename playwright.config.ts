@@ -16,6 +16,17 @@ export default defineConfig({
       name: "chromium",
       use: { browserName: "chromium" },
     },
+    {
+      name: "brave",
+      use: {
+        browserName: "chromium",
+        channel: "chromium",
+        launchOptions: {
+          executablePath:
+            "/Applications/Brave Browser.app/Contents/MacOS/Brave Browser",
+        },
+      },
+    },
   ],
   webServer: {
     command: "npm run dev",

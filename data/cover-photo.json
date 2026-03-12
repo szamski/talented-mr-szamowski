@@ -1,0 +1,26 @@
+{
+  "eyebrow": "STRATEGY CONSULTANT · FULLSTACK DEVELOPER",
+  "headlinePre": "I bridge the gap between",
+  "headlineHighlight": "marketing strategy",
+  "headlinePost": "and technical execution.",
+  "description": "15 years in marketing. Self-taught developer.\nBuilding tools that turn data into decisions.",
+  "tags": [
+    "Python",
+    "Next.js",
+    "TikTok Ads",
+    "BigQuery",
+    "Meta Ads",
+    "Analytics",
+    "TailwindCSS",
+    "Strategy",
+    "TypeScript"
+  ],
+  "textScale": 1,
+  "textX": 390,
+  "textY": 95,
+  "tagsX": 1005,
+  "showDotMatrix": true,
+  "showOrbs": true,
+  "bgOpacity": 0.15,
+  "updatedAt": "2026-03-12T12:23:34.147Z"
+}
