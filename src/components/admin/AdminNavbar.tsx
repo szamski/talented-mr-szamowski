@@ -107,6 +107,7 @@ export default function AdminNavbar({
             { href: "/admin", label: "Projects" },
             { href: "/admin/avatar", label: "Avatar" },
             { href: "/admin/cover-photo", label: "Cover Photo" },
+            { href: "/admin/email-signature", label: "Signature" },
           ].map((link) => (
             <Link
               key={link.href}
